@@ -31,7 +31,7 @@ type View = Exclude<Shortcut, 'focus'> | 'main' | 'ask' | 'settings' | 'focus-hi
 const shortcutIcons = { tasks: ClipboardList, journal: BookOpen, focus: Play, flow: MessageCircle }
 const serviceLabels = { tasks: 'Life Tasks', journal: 'Life Journal', focus: 'LifeTime', flow: '3 questions' }
 const factors: Factor[] = ['Meaningful Goal', 'Personal Control', 'Fast Feedback', 'Other']
-const repoUrl = 'https://github.com/LevPetrogradsky/LiveOS'
+const repoUrl = 'https://github.com/LevPetrogradsky/LiveOS-Portable'
 
 function App({ storageKey, account, existingAccount = false, journalCloudToken, guestCloud = false }: { storageKey?: string; account?: (language: AppLanguage, initialMode?: AccountEntryMode) => ReactNode; existingAccount?: boolean; journalCloudToken?: () => Promise<string | null>; guestCloud?: boolean }) {
   const effectiveStorageKey = storageKey ?? STORAGE_KEY
@@ -664,9 +664,9 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   </>
 
   const renderBrand = (size: number) => {
-    const logo = <><span className="brand-mark"><Leaf size={size} strokeWidth={2.4} /></span><span>LiveOS<span className="brand-dot">.</span></span></>
+    const logo = <><span className="brand-mark"><Leaf size={size} strokeWidth={2.4} /></span><span>LiveOS Portable<span className="brand-dot">.</span></span></>
     return showHome
-      ? <button className="brand" onClick={() => navigate('main')} aria-label="LiveOS home">{logo}</button>
+      ? <button className="brand" onClick={() => navigate('main')} aria-label="LiveOS Portable home">{logo}</button>
       : <div className="brand">{logo}</div>
   }
 
@@ -743,7 +743,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   if (data.pendingSession) return (<>
     <main className="checkin-screen page-container">
       {storageError && <div className="storage-error" role="alert">{t('Your browser could not save the check-in. Your answers are still here. Check available storage and try again.')}</div>}
-      <div className="focus-top"><div className="brand-mark"><Leaf size={18} strokeWidth={2.3} /></div><span>{t('LiveOS / Check-in')}</span></div>
+      <div className="focus-top"><div className="brand-mark"><Leaf size={18} strokeWidth={2.3} /></div><span>{t('LiveOS Portable / Check-in')}</span></div>
       <div className="checkin-card">
         <div className="section-icon"><Sparkles size={20} /></div>
         <p className="eyebrow">{t('A MOMENT TO REFLECT')}</p>
@@ -778,7 +778,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
       <aside className="sidebar">
         {renderBrand(20)}
         <nav aria-label="Main navigation">{renderNavigation(19)}</nav>
-        <div className="sidebar-foot"><div className="sidebar-quote"><span>✳</span><p>{t('A little space for what matters.')}</p></div><span>LiveOS v0.1</span></div>
+        <div className="sidebar-foot"><div className="sidebar-quote"><span>✳</span><p>{t('A little space for what matters.')}</p></div><span>LiveOS Portable v0.1</span></div>
       </aside>
 
       <div className="main-area">

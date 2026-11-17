@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
   appId: 'com.programmerlevpetrogradsky.lifeos',
-  appName: 'LiveOS',
+  appName: 'LiveOS Portable',
   webDir: 'dist',
 }
 

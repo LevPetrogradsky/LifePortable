@@ -48,7 +48,7 @@ export default function AccountPanel({ auth, user, refreshSession, language, ini
         setNotice('If an account exists, check your email for a reset link.')
       } else if (mode === 'sign-up') {
         try {
-          const result = await auth.signUp.email({ email: address, password, name: 'LiveOS member' })
+          const result = await auth.signUp.email({ email: address, password, name: 'LiveOS Portable member' })
           if (result.error) throw result.error
         } catch {
           throw new Error('Could not create the account. Try signing in if you already registered.')

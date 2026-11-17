@@ -57,7 +57,7 @@ test('skipping post-focus clears the choice and keeps one saved session after re
   }
 })
 
-test('older LiveOS backups remain valid without post-focus or preset choices', () => {
+test('older LiveOS Portable backups remain valid without post-focus or preset choices', () => {
   const legacy = emptyData()
   assert.equal(validateLiveOSData(legacy), true)
   assert.equal(parseBackup(JSON.stringify(legacy)).postFocusAction, undefined)

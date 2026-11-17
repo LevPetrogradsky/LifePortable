@@ -15,7 +15,7 @@ export function initialOnboardingMode(
   if (new URLSearchParams(search).get('onboarding') === 'preview') return 'preview'
   if (existingAccount) return null
   try {
-    // Existing LiveOS data predates onboarding. Never interrupt those users.
+    // Existing LiveOS Portable data predates onboarding. Never interrupt those users.
     if (storage.getItem(storageKey) !== null || storage.getItem(completionKey(storageKey)) === 'done') return null
     return 'first-run'
   } catch {

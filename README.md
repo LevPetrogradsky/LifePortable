@@ -1,12 +1,12 @@
-# LiveOS
+# LiveOS Portable
 
-LiveOS brings tasks, a journal, and focus time together in a small web application. The OS home also links to the growing family of LifeDevelop services. This repository starts from the web preview source at commit `375dbdfb7fb25d56104873fb00eafa37c2aba5d6`, with the visible product name changed from LifeOS to LiveOS.
+LiveOS Portable brings tasks, a journal, and focus time together in a small web application. Its OS home also links to the growing family of Live services. This repository starts from the web preview source at commit `375dbdfb7fb25d56104873fb00eafa37c2aba5d6`, with the visible product name changed from LifeOS to LiveOS Portable.
 
 ## Ownership and permitted use
 
-**Copyright 2026 LevPetrogradsky.** The original LiveOS code and assets are provided under the [PolyForm Noncommercial License 1.0.0](LICENSE.md). You may use, change, and share them for personal or other noncommercial purposes under that license. Commercial use requires separate written permission. Third-party components retain their own licenses. A public repository does not transfer ownership.
+**Copyright 2026 LevPetrogradsky.** The original LiveOS Portable code and assets are provided under the [PolyForm Noncommercial License 1.0.0](LICENSE.md). You may use, change, and share them for personal or other noncommercial purposes under that license. Commercial use requires separate written permission. Third-party components retain their own licenses. A public repository does not transfer ownership.
 
-**Русский:** LiveOS принадлежит правообладателю LevPetrogradsky. Личное и иное некоммерческое использование разрешено на условиях [лицензии](LICENSE.md); коммерческое использование требует отдельного письменного разрешения.
+**Русский:** LiveOS Portable принадлежит правообладателю LevPetrogradsky. Личное и иное некоммерческое использование разрешено на условиях [лицензии](LICENSE.md); коммерческое использование требует отдельного письменного разрешения.
 
 ## Run locally
 

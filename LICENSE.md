@@ -130,4 +130,4 @@ software under these terms.
 **Use** means anything you do with the software requiring one
 of your licenses.
 
-Required Notice: Copyright 2026 LevPetrogradsky. LiveOS original code and assets are licensed under the PolyForm Noncommercial License 1.0.0. Commercial use requires separate written permission from the copyright holder. Third-party components retain their own licenses.
+Required Notice: Copyright 2026 LevPetrogradsky. LiveOS Portable original code and assets are licensed under the PolyForm Noncommercial License 1.0.0. Commercial use requires separate written permission from the copyright holder. Third-party components retain their own licenses.

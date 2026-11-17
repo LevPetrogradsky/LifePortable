@@ -237,7 +237,7 @@ export default function MainDashboard({ initialScreen = 'home', onReturnHome, re
           <Github size={15} aria-hidden="true" /> {t('View on GitHub')}
         </a>
         <a className="life-main-support" href="https://ko-fi.com/lifeosapp" target="_blank" rel="noopener noreferrer">
-          <Heart size={15} aria-hidden="true" /> {language === 'ru' ? 'Поддержать LiveOS' : 'Support LiveOS'}
+          <Heart size={15} aria-hidden="true" /> {language === 'ru' ? 'Поддержать LiveOS Portable' : 'Support LiveOS Portable'}
         </a>
       </div>
       <div className="life-main-hero-actions">

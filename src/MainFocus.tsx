@@ -162,7 +162,7 @@ export default function MainFocus({
       </div>
       {help ? <>
         <p>{t(help.description)}</p>
-        <p>{t('LiveOS can’t change these settings from the browser.')}</p>
+        <p>{t('LiveOS Portable can’t change these settings from the browser.')}</p>
         <a href={help.link} target="_blank" rel="noreferrer">{t('Apple Screen Time guide')} <ExternalLink size={16} /></a>
       </> : <div className="life-main-focus-dialog-actions">
         <button type="button" onClick={() => setPanel('apps')}>
@@ -177,7 +177,7 @@ export default function MainFocus({
         <button type="button" aria-pressed={ambient} onClick={toggleAmbient}>
           <Trees size={18} aria-hidden="true" /> {t('Ambient')} <span>{t(ambient ? 'On' : 'Off')}</span>
         </button>
-        <p id="focus-silence-help" className="life-main-focus-tool-note">{t('Silence applies to LiveOS break reminders.')}</p>
+        <p id="focus-silence-help" className="life-main-focus-tool-note">{t('Silence applies to LiveOS Portable break reminders.')}</p>
         {ambientMessage && <p className="life-main-focus-tool-note" role="status">{t(ambientMessage)}</p>}
       </div>}
     </dialog>
