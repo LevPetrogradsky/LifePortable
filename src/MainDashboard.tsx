@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { ArrowLeft, ArrowRight, BookOpen, BookText, BriefcaseBusiness, CalendarDays, Check, ChevronRight, Circle, ClipboardList, Code2, Dumbbell, Flag, Github, GripHorizontal, HardDrive, Heart, History, ListTodo, Maximize2, Pause, Pencil, Play, Plus, Search, Settings2, ShieldCheck, Trash2, X } from 'lucide-react'
 import { taskLists, type LiveOSData, type Task, type TaskList } from './data'
 import { todayTaskLimit } from './task-rules'
@@ -44,12 +44,13 @@ const taskList = (task: Task): TaskList => task.list ?? 'today'
 
 type TaskEditor = { id: string | null; title: string; list: TaskList }
 
-function BreakCard({ taskTitle, activeTime, showTime, running, language, onPause, onContinue, onReturn, onFinish, onCancel }: {
+function BreakCard({ taskTitle, activeTime, showTime, running, language, links, onPause, onContinue, onReturn, onFinish, onCancel }: {
   taskTitle: string
   activeTime: string
   showTime: boolean
   running: boolean
   language: 'en' | 'ru'
+  links: ReactNode
   onPause: () => void
   onContinue: () => void
   onReturn: () => void
@@ -83,6 +84,7 @@ function BreakCard({ taskTitle, activeTime, showTime, running, language, onPause
       <button type="button" onClick={() => setConfirmCancel(false)}>{language === 'ru' ? 'Назад' : 'Keep session'}</button>
       <button type="button" onClick={onCancel}>{language === 'ru' ? 'Отменить сессию' : 'Cancel session'}</button>
     </div>}
+    {links}
   </section>
 }
 
@@ -220,9 +222,20 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
     if (onDeleteTask(id)) setDeleting(null)
   }
 
-  const breakCard = focusTaskTitle !== undefined && <BreakCard taskTitle={focusTaskTitle} activeTime={pausedActiveTime ?? '00:00:00'} showTime={showPausedTime} running={focusRunning} language={language}
+  const hubLinks = <nav className="life-main-today-links" aria-label={language === 'ru' ? 'Ссылки сообщества' : 'Community links'}>
+    <a className="life-main-discord" href="https://discord.gg/y4s67MzZr" target="_blank" rel="noopener noreferrer">
+      {language === 'ru' ? 'Вступить в Discord' : 'Join Discord'} <ArrowRight size={15} aria-hidden="true" />
+    </a>
+    <a className="life-main-github" href={repoUrl} target="_blank" rel="noopener noreferrer">
+      <Github size={15} aria-hidden="true" /> {t('View on GitHub')}
+    </a>
+    <a className="life-main-support" href="https://ko-fi.com/lifeosapp" target="_blank" rel="noopener noreferrer">
+      <Heart size={15} aria-hidden="true" /> {language === 'ru' ? 'Поддержать LiveOS Portable' : 'Support LiveOS Portable'}
+    </a>
+  </nav>
+  const breakCard = focusTaskTitle !== undefined && <BreakCard taskTitle={focusTaskTitle} activeTime={pausedActiveTime ?? '00:00:00'} showTime={showPausedTime} running={focusRunning} language={language} links={hubLinks}
     onPause={onPauseFocus} onContinue={onContinueFocus} onReturn={onReturnToFocus} onFinish={onFinishPaused} onCancel={onCancelFocus} />
-  const addTaskButton = <button type="button" className={`life-main-add-task${!nextTask && !breakCard ? ' life-main-add-task-inline' : ''}`} onClick={() => openTasks(true)}>
+  const addTaskButton = <button type="button" className="life-main-add-task" onClick={() => openTasks(true)}>
     <span className="life-main-shortcut-icon add"><Plus size={21} aria-hidden="true" /></span>
     <strong>{t('Add a task')}</strong>
   </button>
@@ -231,15 +244,6 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
     <header className="life-main-hero">
       <div><span className="life-main-hub-name">Hub</span><h1 ref={heading} tabIndex={-1}>{language === 'ru' ? 'Добро пожаловать' : 'Welcome'}{displayName?.trim() ? `, ${displayName.trim()}` : ''}!</h1>
         <p className="life-main-thanks">{language === 'ru' ? 'Спасибо' : 'Thank you'} <Heart size={13} fill="currentColor" aria-hidden="true" /></p>
-        <a className="life-main-discord" href="https://discord.gg/y4s67MzZr" target="_blank" rel="noopener noreferrer">
-          {language === 'ru' ? 'Вступить в Discord' : 'Join Discord'} <ArrowRight size={15} aria-hidden="true" />
-        </a>
-        <a className="life-main-github" href={repoUrl} target="_blank" rel="noopener noreferrer">
-          <Github size={15} aria-hidden="true" /> {t('View on GitHub')}
-        </a>
-        <a className="life-main-support" href="https://ko-fi.com/lifeosapp" target="_blank" rel="noopener noreferrer">
-          <Heart size={15} aria-hidden="true" /> {language === 'ru' ? 'Поддержать LiveOS Portable' : 'Support LiveOS Portable'}
-        </a>
       </div>
       <div className="life-main-hero-actions">
         <span className="home-icon-action">
@@ -274,11 +278,11 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
           </div>
         </> : <div className="life-main-today-empty-state">
           <p className="life-main-today-empty">{t(doneToday.length ? 'You’re all caught up' : 'No tasks for today')}</p>
-          {addTaskButton}
         </div>}
+        {hubLinks}
       </section>}
 
-      {(nextTask || breakCard) && addTaskButton}
+      {addTaskButton}
 
       <section className="life-main-services" aria-labelledby="life-main-services-title">
       <h2 id="life-main-services-title">Live Services</h2>
