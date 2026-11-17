@@ -120,9 +120,7 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
   const completed = tasks.filter(task => task.completedAt !== null)
     .sort((a, b) => Date.parse(b.completedAt!) - Date.parse(a.completedAt!))
   const doneToday = completed.filter(task => taskList(task) === 'today' && new Date(task.completedAt!).toDateString() === today)
-  const nextTask = activeToday[0]
   const todayIsFull = activeToday.length >= todayTaskLimit
-  const totalToday = activeToday.length + doneToday.length
   const editorTask = editor?.id ? tasks.find(task => task.id === editor.id) : undefined
   const cannotAddToToday = todayIsFull && !(editorTask && (editorTask.completedAt || taskList(editorTask) === 'today'))
   const visibleActive = filter === 'completed' ? [] : active.filter(task => taskList(task) === filter)
@@ -230,7 +228,7 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
       <Github size={15} aria-hidden="true" /> {t('View on GitHub')}
     </a>
     <a className="life-main-support" href="https://ko-fi.com/lifeosapp" target="_blank" rel="noopener noreferrer">
-      <Heart size={15} aria-hidden="true" /> {language === 'ru' ? 'Поддержать LiveOS Portable' : 'Support LiveOS Portable'}
+      <Heart size={15} aria-hidden="true" /> {language === 'ru' ? 'Поддержать LiveOS' : 'Support LiveOS'}
     </a>
   </nav>
   const breakCard = focusTaskTitle !== undefined && <BreakCard taskTitle={focusTaskTitle} activeTime={pausedActiveTime ?? '00:00:00'} showTime={showPausedTime} running={focusRunning} language={language} links={hubLinks}
@@ -257,30 +255,12 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
     </header>
 
     <div className="life-main-stack">
-      {breakCard || <section className="life-main-today" aria-labelledby="life-main-today">
-        <div className="life-main-today-heading">
-          <h2 id="life-main-today">{t('Today')}</h2>
-          {totalToday > 0 && <span>{doneToday.length} / {totalToday} {language === 'ru' ? 'выполнено' : 'done'}</span>}
-        </div>
-        {totalToday > 0 && <progress max={totalToday} value={doneToday.length} aria-label="Today’s task progress" />}
-        {nextTask ? <>
-          <div className="life-main-next">
-            <button type="button" className="life-main-complete" aria-label={`Complete ${nextTask.title}`} onClick={() => toggleTask(nextTask)}><Circle size={22} /></button>
-            <div>
-              <button type="button" className="life-main-task-link" aria-haspopup="dialog" onClick={() => onOpenTask(nextTask.id)}>
-                <span>{nextTask.title}</span><ChevronRight size={16} aria-hidden="true" />
-              </button>
-              <p>{t('Next up')}</p>
-            </div>
-            <button type="button" className="life-main-icon life-main-start-small" aria-label={`Start ${nextTask.title}`} onClick={() => onStart(nextTask)}>
-              <Play size={17} fill="currentColor" aria-hidden="true" />
-            </button>
-          </div>
-        </> : <div className="life-main-today-empty-state">
-          <p className="life-main-today-empty">{t(doneToday.length ? 'You’re all caught up' : 'No tasks for today')}</p>
-        </div>}
-        {hubLinks}
-      </section>}
+      {breakCard || <div className="life-main-today-area">
+        <h2 id="life-main-today">{t('Today')}</h2>
+        <section className="life-main-today" aria-labelledby="life-main-today">
+          {hubLinks}
+        </section>
+      </div>}
 
       {addTaskButton}
 
