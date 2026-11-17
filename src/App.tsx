@@ -62,7 +62,6 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
     catch { return defaultView }
   })
   const [homeNavigationKey, setHomeNavigationKey] = useState(0)
-  const [presetsReturnView, setPresetsReturnView] = useState<View>(defaultView)
   const [storageReturnView, setStorageReturnView] = useState<View>(defaultView)
   const [reflectionReturnView, setReflectionReturnView] = useState<View>(defaultView)
   const [reflectionNotice, setReflectionNotice] = useState('')
@@ -587,11 +586,6 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
     navigate('storage')
   }
 
-  const openPresets = () => {
-    setPresetsReturnView(view)
-    navigate('presets')
-  }
-
   const applyPreset = (id: FocusPresetId) => {
     const preset = findFocusPreset(id)
     if (!preset) return false
@@ -873,7 +867,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
           appliedPresetId={data.focusPresetId}
           sessionState={data.pendingSession ? 'pending' : data.activeSession ? 'active' : 'idle'}
           onApply={applyPreset}
-          onBack={() => navigate(serviceMode === 'time' ? 'focus-history' : presetsReturnView)}
+          onBack={() => navigate(serviceMode === 'time' ? 'focus-history' : defaultView)}
         />}
 
         {(view === 'flow' || view === 'focus-history') && <FlowEnginePage key={view}
@@ -923,12 +917,8 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
             journalSync={journalSyncControls}
             theme={data.theme}
             language={data.language ?? 'en'}
-            timeFormat={timeFormat}
-            onTimeFormatChange={timeFormat => update(current => ({ ...current, timeFormat }))}
             onLanguageChange={language => update(current => ({ ...current, language }))}
             onThemeChange={theme => update(current => ({ ...current, theme }))}
-            interactiveTips={data.interactiveTips !== false}
-            onInteractiveTipsChange={interactiveTips => update(current => ({ ...current, interactiveTips }))}
             showHome={showHome}
             onHomeVisibilityChange={changeHomeVisibility}
             showAskLiveOS={showAskLiveOS}
@@ -937,22 +927,8 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
             onShortcutChange={changeShortcut}
             onExport={exportData}
             onImport={importBackup}
-            repoUrl={repoUrl}
             displayName={data.displayName ?? ''}
             onDisplayNameChange={displayName => update(current => ({ ...current, displayName: displayName || undefined }))}
-            reminderMinutes={reminderMinutes}
-            timerDefaultView={timerView(data)}
-            onTimerDefaultViewChange={timerDefaultView => update(current => ({ ...current, timerDefaultView }))}
-            onReminderMinutesChange={breakReminderMinutes => update(current => ({ ...current, breakReminderMinutes, focusPresetId: undefined }))}
-            focusCheckin={{
-              enabled: data.focusCheckinEnabled !== false,
-              onChange: focusCheckinEnabled => update(current => ({ ...current, focusCheckinEnabled })),
-            }}
-            postFocusAction={{
-              value: data.postFocusAction,
-              onChange: postFocusAction => update(current => ({ ...current, postFocusAction })),
-            }}
-            onOpenPresets={openPresets}
           />
         )}
       </div>

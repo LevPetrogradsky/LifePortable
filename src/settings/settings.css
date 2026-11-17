@@ -813,3 +813,23 @@
   .settings-page__header h1 { width: 100%; }
   .settings-page__header-actions { width: 100%; justify-content: flex-end; }
 }
+
+.settings-page--hub {
+  width: min(100% - 32px, 640px);
+  padding-top: clamp(28px, 5vw, 52px);
+}
+
+.settings-page--hub h1 { margin-bottom: 20px; }
+.settings-page--hub .settings-page__groups { gap: 10px; }
+.settings-page--hub .settings-page__group { border-radius: 15px; }
+.settings-page--hub .settings-page__row { min-height: 58px; }
+.settings-page--hub .settings-page__panel { gap: 14px; }
+.settings-page--hub .settings-page__shortcut-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 540px) {
+  .settings-page--hub .settings-page__shortcut-list { grid-template-columns: 1fr; }
+}
