@@ -240,8 +240,10 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
 
   if (screen === 'home') return <main className="life-main life-main-home">
     <header className="life-main-hero">
-      <div><span className="life-main-hub-name">Hub</span><h1 ref={heading} tabIndex={-1}>{language === 'ru' ? 'Добро пожаловать' : 'Welcome'}{displayName?.trim() ? `, ${displayName.trim()}` : ''}!</h1>
-        <p className="life-main-thanks">{language === 'ru' ? 'Спасибо' : 'Thank you'} <Heart size={13} fill="currentColor" aria-hidden="true" /></p>
+      <div><span className="life-main-hub-name">Hub</span>
+        <div className="life-main-celebration"><h1 ref={heading} tabIndex={-1}>{language === 'ru' ? 'Спасибо' : 'Thank You'}{displayName?.trim() ? `, ${displayName.trim()}` : ''}!</h1>
+          <Sparkles size={32} aria-hidden="true" />
+        </div>
       </div>
       <div className="life-main-hero-actions">
         <span className="home-icon-action">

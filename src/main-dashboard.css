@@ -65,9 +65,10 @@
   line-height: 1.06;
   font-weight: 750;
   overflow-wrap: anywhere;
+  color: var(--main-blue-text);
 }
-.life-main-thanks { display: flex; align-items: center; gap: 5px; margin: 7px 0 0; color: var(--main-muted); font-size: 13px; }
-.life-main-thanks svg { color: #df3954; }
+.life-main-celebration { display: flex; align-items: flex-start; gap: 14px; }
+.life-main-celebration > svg { flex: none; margin-top: 2px; color: #e3a833; }
 .life-main-discord,
 .life-main-github,
 .life-main-support {
