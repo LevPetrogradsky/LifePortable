@@ -268,10 +268,6 @@
   background: var(--main-surface);
 }
 
-.life-main-history-link {
-  justify-self: start;
-}
-
 .life-main-hub-name {
   display: inline-block;
   margin-bottom: 6px;

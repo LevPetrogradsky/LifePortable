@@ -55,7 +55,7 @@ const russianAnswers: Record<string, { text: string; steps: string[] }> = {
   'navigation:toggle': { text: 'Состав нижней панели можно настроить.', steps: ['Открой Settings, затем Navigation.', 'Включи или выключи Гид и Journal для нижней панели.', 'Выбор сохранится автоматически.'] },
   'backup:export': { text: 'Резервная копия сохраняет данные LiveOS Portable в файл.', steps: ['Открой Settings и нажми Export.', 'Сохрани скачанный файл в надёжном месте.', 'При необходимости восстанови его через Import в Settings.'] },
   'tasks:link': { text: 'Заметку Journal можно связать с одной задачей.', steps: ['Открой Tasks и нажми название задачи.', 'В истории нажми Link a note и выбери свободную заметку.', 'Или нажми Write a reflection, чтобы создать новую связанную заметку.'] },
-  'tasks:history': { text: 'Можно посмотреть все фокус-сессии или только сессии одной задачи.', steps: ['Нажми Focus history на Home, чтобы увидеть общий список.', 'Для одной задачи открой Tasks и нажми её название.'] },
+  'tasks:history': { text: 'Можно посмотреть все фокус-сессии или только сессии одной задачи.', steps: ['Общая история фокуса находится в LiveTime.', 'Для одной задачи открой Tasks и нажми её название.'] },
   'tasks:plan': { text: 'Для текущих дел есть Today, а для идей на потом — Someday.', steps: ['Нажми Add a task на Home или открой Tasks.', 'Выбери Today или Someday.', 'В Today помещается до пяти активных задач.'] },
   'reflect:review': { text: 'Три вопроса помогают заметить, что делало фокус-сессии полезными.', steps: ['Заверши сессию фокуса.', 'Выбери «Написать рефлексию», чтобы ответить на вопросы.', 'Прошлые ответы доступны в истории фокуса.'] },
   'settings:personalize': { text: 'В Settings можно настроить LiveOS Portable под себя.', steps: ['Открой Settings.', 'В Personalize выбери тему, а в Navigation настрой нижнюю панель.', 'Там же можно экспортировать резервную копию.'] },
@@ -111,7 +111,7 @@ function answerEnglish(question: string, previous?: GuideContext): GuideAnswer {
   if (/focus|session|timer|фокус|сесси|таймер/.test(query)) return focusStart()
   if (/history|истори/.test(query)) {
     return answer('You can review all focus sessions or just those for one task.', 'tasks', { topic: 'tasks', step: 'history' },
-      ['Tap Focus history on Home for the full list.', 'For one task, open Tasks and tap its name to see Focus sessions.'],
+      ['Open LiveTime for the full focus history.', 'For one task, open Tasks and tap its name to see Focus sessions.'],
       ['How do I start a focus session?', 'How do I link a note to a task?'])
   }
   if (previous?.topic === 'folders' && /туда|сохран|save.*there|save.*note/.test(query)) return folderOverview()

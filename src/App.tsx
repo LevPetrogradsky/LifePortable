@@ -830,7 +830,6 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
           onJournal={onHome('journal') ? () => navigate('journal') : undefined}
           onStorage={serviceMode === 'hub' ? openStorage : undefined}
           onAI={serviceMode === 'hub' ? () => navigate('ai') : undefined}
-          onFocusHistory={() => navigate('focus-history')}
           onSettings={() => navigate('settings')}
           onSearch={() => setSearchOpen(true)}
         />}
