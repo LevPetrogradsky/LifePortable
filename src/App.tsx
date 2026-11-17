@@ -14,6 +14,8 @@ import { cloudConsentKey, guestRecoveryStorageKey, normalizeRecoveryCode, readRe
 import FlowEnginePage from './flow/FlowEnginePage'
 import BreakReminder from './settings/BreakReminder'
 import SettingsPage from './settings/SettingsPage'
+import LiveStoragePage from './settings/LiveStoragePage'
+import type { JournalCloudControls } from './settings/JournalCloudPanel'
 import PostFocusChoice from './PostFocusChoice'
 import FocusPresets from './presets/PresetsPage'
 import { applyFocusPreset, findFocusPreset, type FocusPresetId } from './presets/focusPresets'
@@ -28,7 +30,7 @@ import './mobile-navigation.css'
 import { mobileNavigationLayout } from './mobile-navigation'
 import { repositoryUrl, serviceMode, serviceName } from './service-mode'
 
-type View = Exclude<Shortcut, 'focus'> | 'main' | 'ask' | 'settings' | 'focus-history' | 'presets'
+type View = Exclude<Shortcut, 'focus'> | 'main' | 'ask' | 'settings' | 'storage' | 'focus-history' | 'presets'
 const shortcutIcons = { tasks: ClipboardList, journal: BookOpen, focus: Play, flow: MessageCircle }
 const serviceLabels = { tasks: 'LiveTasks', journal: 'LiveJournal', focus: 'LiveTime', flow: '3 questions' }
 const factors: Factor[] = ['Meaningful Goal', 'Personal Control', 'Fast Feedback', 'Other']
@@ -61,11 +63,13 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   })
   const [homeNavigationKey, setHomeNavigationKey] = useState(0)
   const [presetsReturnView, setPresetsReturnView] = useState<View>(defaultView)
+  const [storageReturnView, setStorageReturnView] = useState<View>(defaultView)
   const [reflectionReturnView, setReflectionReturnView] = useState<View>(defaultView)
   const [reflectionNotice, setReflectionNotice] = useState('')
   const [postFocusReflection, setPostFocusReflection] = useState(false)
   const isHidden = (page: View) => page === 'main' ? !showHome
     : page === 'flow' ? !postFocusReflection
+      : page === 'storage' ? serviceMode !== 'hub'
       : serviceMode !== 'hub' && page === 'journal' && serviceMode !== 'journal' ? true
       : page === 'journal' && !inBar(page) && !(showHome && onHome(page))
   const view = isHidden(requestedView) ? defaultView : requestedView
@@ -578,6 +582,11 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  const openStorage = () => {
+    setStorageReturnView(view)
+    navigate('storage')
+  }
+
   const openPresets = () => {
     setPresetsReturnView(view)
     navigate('presets')
@@ -631,6 +640,13 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
     setView('journal')
     setJournalPrompt(false)
     setJournalSearchResult({ id })
+  }
+
+  const journalSyncControls: JournalCloudControls = {
+    available: Boolean(journalCloudToken), enabled: cloudEnabled, guest: guestCloud, code: recoveryCode,
+    status: journalCloudStatus, error: journalCloudError, lastSavedAt: journalLastSavedAt,
+    onRetry: () => void journalCloud.current?.sync(), onEnable: enableJournalCloud,
+    onVerifyRecovery: verifyRecoveryCode, onRecover: recoverJournalCloud,
   }
 
   const changeHomeVisibility = (visible: boolean) => update(current => {
@@ -816,6 +832,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
           onDeleteTask={deleteTask}
           onStart={startFocus}
           onJournal={onHome('journal') ? () => navigate('journal') : undefined}
+          onStorage={serviceMode === 'hub' ? openStorage : undefined}
           onFocusHistory={() => navigate('focus-history')}
           onSettings={() => navigate('settings')}
           onSearch={() => setSearchOpen(true)}
@@ -866,13 +883,20 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
             onCreate={createJournalEntry} onEdit={editJournalEntry} onDelete={deleteJournalEntry} />
         )}
 
+        {view === 'storage' && <LiveStoragePage
+          account={accountContent}
+          journalSync={journalSyncControls}
+          language={language}
+          onSaveCopy={exportData}
+          onBack={() => navigate(storageReturnView)}
+          backLabel={storageReturnView === 'settings' ? (language === 'ru' ? 'Назад к настройкам' : 'Back to Settings') : t('Back to Hub')}
+        />}
+
         {view === 'settings' && (
           <SettingsPage
             account={accountContent}
-            journalSync={{ available: Boolean(journalCloudToken), enabled: cloudEnabled, guest: guestCloud, code: recoveryCode, status: journalCloudStatus,
-              error: journalCloudError, lastSavedAt: journalLastSavedAt,
-              onRetry: () => void journalCloud.current?.sync(), onEnable: enableJournalCloud,
-              onVerifyRecovery: verifyRecoveryCode, onRecover: recoverJournalCloud }}
+            onOpenStorage={serviceMode === 'hub' ? openStorage : undefined}
+            journalSync={journalSyncControls}
             theme={data.theme}
             language={data.language ?? 'en'}
             timeFormat={timeFormat}

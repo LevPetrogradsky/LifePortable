@@ -78,7 +78,7 @@ export default function AccountPanel({ auth, user, refreshSession, language, ini
         changeMode('sign-in')
       })}>{t('Sign out')}</button>
     </> : <form className="settings-page__account" onSubmit={submit}>
-      {mode !== 'reset' && <div className="settings-page__account-modes" aria-label={t('Account')}>
+      {mode !== 'reset' && <div className="settings-page__account-modes" aria-label="Live Account">
         <button type="button" aria-pressed={mode === 'sign-in'} disabled={busy} onClick={() => changeMode('sign-in')}>{t('Sign in')}</button>
         <button type="button" aria-pressed={mode === 'sign-up'} disabled={busy} onClick={() => changeMode('sign-up')}>{t('Create account')}</button>
       </div>}

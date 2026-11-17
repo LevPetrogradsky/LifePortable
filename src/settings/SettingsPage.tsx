@@ -10,6 +10,7 @@ const shortcutNames = { tasks: 'LiveTasks', journal: 'LiveJournal', focus: 'Live
 
 interface SettingsPageProps {
   account?: ReactNode
+  onOpenStorage?: () => void
   journalSync: JournalCloudControls
   theme: Theme
   language: 'en' | 'ru'
@@ -131,6 +132,7 @@ function AboutLiveOS({ repoUrl, language }: { repoUrl: string; language: AppLang
 
 export default function SettingsPage({
   account,
+  onOpenStorage,
   journalSync,
   theme, onThemeChange, language, onLanguageChange, timeFormat, onTimeFormatChange, interactiveTips, onInteractiveTipsChange, showHome, onHomeVisibilityChange, showAskLiveOS, onAskLiveOSVisibilityChange, shortcutVisible, onShortcutChange, onExport, onImport, repoUrl, focusCheckin, postFocusAction, onOpenPresets,
   reminderMinutes, onReminderMinutesChange, displayName, onDisplayNameChange, timerDefaultView, onTimerDefaultViewChange,
@@ -179,8 +181,9 @@ export default function SettingsPage({
     return () => cancelAnimationFrame(frame)
   }, [scrollTarget, openSections])
   const searchItems: { title: string; section: SettingsSection; target: string; keywords?: string }[] = [
-    { title: t('Account'), section: 'account', target: 'account', keywords: 'sign in register email password аккаунт вход пароль' },
-    { title: language === 'ru' ? 'Сохранение Journal' : 'Journal storage', section: 'account', target: 'journal-storage', keywords: 'sync backup журнал синхронизация' },
+    { title: 'Live Account', section: 'account', target: onOpenStorage ? 'storage' : 'account', keywords: 'sign in register email password аккаунт вход пароль' },
+    ...(onOpenStorage ? [{ title: 'Live Storage', section: 'account' as const, target: 'storage', keywords: 'storage хранение данные' }] : []),
+    { title: language === 'ru' ? 'Сохранение Journal' : 'Journal storage', section: 'account', target: onOpenStorage ? 'storage' : 'journal-storage', keywords: 'sync backup журнал синхронизация' },
     { title: t('Profile & appearance'), section: 'profile', target: 'profile', keywords: 'profile appearance профиль оформление' },
     { title: t('Theme'), section: 'profile', target: 'theme', keywords: 'light dark system светлая темная системная' },
     { title: language === 'ru' ? 'Формат времени' : 'Time format', section: 'profile', target: 'time-format', keywords: '12 24 часы clock' },
@@ -208,7 +211,7 @@ export default function SettingsPage({
     { title: t('Fork on GitHub'), section: 'advanced', target: 'fork-link', keywords: 'source code исходный код' },
   ]
   const sectionTitle = (section: SettingsSection) => t({
-    account: 'Account', profile: 'Profile & appearance', focus: 'Focus', focusOptions: 'Focus',
+    account: 'Live Account', profile: 'Profile & appearance', focus: 'Focus', focusOptions: 'Focus',
     more: 'More options', backups: 'Backups', navigation: 'Hub & navigation', about: 'About', advanced: 'Advanced Options',
   }[section])
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase()
@@ -234,7 +237,7 @@ export default function SettingsPage({
       </div>
 
       <nav className="settings-page__quick-nav" aria-label={language === 'ru' ? 'Быстрый переход по настройкам' : 'Settings quick links'}>
-        <button type="button" onClick={() => jumpTo('account')}><UserRound size={16} aria-hidden="true" />{t('Account')}</button>
+        <button type="button" onClick={() => onOpenStorage ? onOpenStorage() : jumpTo('account')}><UserRound size={16} aria-hidden="true" />{onOpenStorage ? 'Live Storage' : 'Live Account'}</button>
         <button type="button" onClick={() => jumpTo('focus')}><Timer size={16} aria-hidden="true" />{t('Focus')}</button>
         <button type="button" onClick={() => jumpTo('more')}><Compass size={16} aria-hidden="true" />{t('More options')}</button>
       </nav>
@@ -248,16 +251,21 @@ export default function SettingsPage({
           onChange={event => setSearchQuery(event.currentTarget.value)} />
         {normalizedQuery ? <div className="settings-page__search-results" aria-live="polite">
           {results.length ? results.map(item => <button type="button" key={`${item.section}-${item.target}-${item.title}`}
-            onClick={() => jumpTo(item.section, item.target)}>
+            onClick={() => item.target === 'storage' && onOpenStorage ? onOpenStorage() : jumpTo(item.section, item.target)}>
             <span>{item.title}</span>{sectionTitle(item.section) !== item.title && <small>{sectionTitle(item.section)}</small>}
           </button>) : <p>{language === 'ru' ? 'Ничего не найдено. Попробуйте другое слово.' : 'No settings found. Try another word.'}</p>}
         </div> : <p className="settings-page__search-hint">{language === 'ru' ? 'Поиск охватывает и свернутые разделы.' : 'Search includes collapsed sections.'}</p>}
       </div>}
 
       <div className="settings-page__groups">
-        <SettingsGroup id="settings-target-account" title={t('Account')} icon={<UserRound size={18} />} open={openSections.account} onOpenChange={open => setSection('account', open)}>
-          {account}
-          <div id="settings-target-journal-storage"><JournalCloudPanel cloud={journalSync} language={language} onSaveCopy={onExport} /></div>
+        <SettingsGroup id="settings-target-account" title="Live Account" icon={<UserRound size={18} />} open={openSections.account} onOpenChange={open => setSection('account', open)}>
+          {onOpenStorage ? <>
+            <p className="settings-page__description">{language === 'ru' ? 'Аккаунт и сохранение Journal находятся в Live Storage.' : 'Your account and Journal storage are in Live Storage.'}</p>
+            <button type="button" className="settings-page__action" onClick={onOpenStorage}>{language === 'ru' ? 'Открыть Live Storage' : 'Open Live Storage'}</button>
+          </> : <>
+            {account}
+            <div id="settings-target-journal-storage"><JournalCloudPanel cloud={journalSync} language={language} onSaveCopy={onExport} /></div>
+          </>}
         </SettingsGroup>
         <SettingsGroup id="settings-target-profile" title={t('Profile & appearance')} icon={<Palette size={18} />} open={openSections.profile} onOpenChange={open => setSection('profile', open)}
           summary={t(themes.find(option => option.value === theme)?.label ?? '')}>

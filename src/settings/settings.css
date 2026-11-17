@@ -36,6 +36,38 @@
   line-height: 1.08;
 }
 
+.live-storage-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-bottom: 22px;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: var(--settings-accent);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.live-storage-page__heading { display: flex; align-items: center; gap: 16px; margin-bottom: 25px; }
+.live-storage-page__heading h1 { margin: 0 0 4px; }
+.live-storage-page__heading p { margin: 0; color: var(--settings-muted); line-height: 1.45; }
+.live-storage-page__mark { display: grid; flex: none; width: 52px; height: 52px; place-items: center; border-radius: 16px; background: var(--settings-tint); color: var(--settings-accent); }
+.live-storage-page__sections { display: grid; gap: 16px; }
+.live-storage-page__card { min-width: 0; padding: 19px; border: 1px solid var(--settings-line); border-radius: 20px; background: var(--settings-surface); }
+.live-storage-page__card h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; font-size: 20px; }
+.live-storage-page__card > .settings-page__journal-sync { margin-top: 0; }
+.live-storage-page__back:focus-visible { outline: 2px solid var(--settings-accent); outline-offset: 3px; }
+
+@media (max-width: 480px) {
+  .live-storage-page__heading { align-items: flex-start; gap: 12px; }
+  .live-storage-page__heading h1 { font-size: 36px; }
+  .live-storage-page__mark { width: 44px; height: 44px; }
+  .live-storage-page__card { padding: 15px; }
+}
+
 .settings-page__header {
   display: flex;
   align-items: center;

@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from 'react'
-import { ArrowLeft, ArrowRight, BookOpen, BookText, BriefcaseBusiness, CalendarDays, Check, ChevronRight, Circle, ClipboardList, Code2, Dumbbell, Flag, Github, GripHorizontal, Heart, History, ListTodo, Maximize2, Pause, Pencil, Play, Plus, Search, Settings2, ShieldCheck, Trash2, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BookOpen, BookText, BriefcaseBusiness, CalendarDays, Check, ChevronRight, Circle, ClipboardList, Code2, Dumbbell, Flag, Github, GripHorizontal, HardDrive, Heart, History, ListTodo, Maximize2, Pause, Pencil, Play, Plus, Search, Settings2, ShieldCheck, Trash2, X } from 'lucide-react'
 import { taskLists, type LiveOSData, type Task, type TaskList } from './data'
 import { todayTaskLimit } from './task-rules'
 import { translate } from './language'
@@ -33,6 +33,7 @@ interface MainDashboardProps {
   onDeleteTask: (id: string) => boolean
   onStart: (task: Task) => void
   onJournal?: () => void
+  onStorage?: () => void
   onFocusHistory: () => void
   onSettings: () => void
   onSearch: () => void
@@ -85,7 +86,7 @@ function BreakCard({ taskTitle, activeTime, showTime, running, language, onPause
   </section>
 }
 
-export default function MainDashboard({ initialScreen = 'home', hideBack = false, onReturnHome, returnLabel, showTasksShortcut, showFocusShortcut, searchIncludesJournal, repoUrl, tasks, focusTaskTitle, focusRunning = false, pausedActiveTime, showPausedTime = true, displayName, language = 'en', onPauseFocus, onContinueFocus, onReturnToFocus, onFinishPaused, onCancelFocus, onUpdate, onOpenTask, onDeleteTask, onStart, onJournal, onFocusHistory, onSettings, onSearch }: MainDashboardProps) {
+export default function MainDashboard({ initialScreen = 'home', hideBack = false, onReturnHome, returnLabel, showTasksShortcut, showFocusShortcut, searchIncludesJournal, repoUrl, tasks, focusTaskTitle, focusRunning = false, pausedActiveTime, showPausedTime = true, displayName, language = 'en', onPauseFocus, onContinueFocus, onReturnToFocus, onFinishPaused, onCancelFocus, onUpdate, onOpenTask, onDeleteTask, onStart, onJournal, onStorage, onFocusHistory, onSettings, onSearch }: MainDashboardProps) {
   const t = (text: string) => translate(language, text)
   const [screen, setScreen] = useState(initialScreen)
   const [filter, setFilter] = useState<TaskList | 'completed'>('today')
@@ -304,6 +305,10 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
           <span className="life-main-shortcut-icon clients"><BriefcaseBusiness size={21} aria-hidden="true" /></span>
           <strong>LiveClients</strong>
         </a>
+        {onStorage && <button type="button" onClick={onStorage}>
+          <span className="life-main-shortcut-icon storage"><HardDrive size={21} aria-hidden="true" /></span>
+          <strong>Live Storage</strong>
+        </button>}
         <div className="life-main-service-soon">
           <span className="life-main-shortcut-icon future"><Settings2 size={21} aria-hidden="true" /></span>
           <span className="life-main-service-copy"><strong>LiveManage</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>

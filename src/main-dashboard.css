@@ -418,6 +418,11 @@
   color: #23656b;
 }
 
+.life-main-shortcut-icon.storage {
+  background: #e8e4f8;
+  color: #59449b;
+}
+
 .life-main-shortcut-icon.future {
   background: var(--main-soft);
   color: var(--main-muted);
