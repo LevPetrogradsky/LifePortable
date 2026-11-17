@@ -4,7 +4,7 @@ import type { AppLanguage } from '../language'
 import JournalCloudPanel, { type JournalCloudControls } from './JournalCloudPanel'
 import './settings.css'
 
-export default function LiveStoragePage({ account, journalSync, language, onSaveCopy, onBack, onHub, backLabel, showContextBack }: {
+export default function LiveStoragePage({ account, journalSync, language, onSaveCopy, onBack, onHub, backLabel, showContextBack, onboardingDisabled, onOnboardingChange }: {
   account?: ReactNode
   journalSync: JournalCloudControls
   language: AppLanguage
@@ -13,9 +13,13 @@ export default function LiveStoragePage({ account, journalSync, language, onSave
   onHub: () => void
   backLabel: string
   showContextBack: boolean
+  onboardingDisabled?: boolean | null
+  onOnboardingChange?: (disabled: boolean) => Promise<boolean>
 }) {
   const ru = language === 'ru'
   const [screen, setScreen] = useState<'home' | 'account' | 'journal'>('home')
+  const [savingPreference, setSavingPreference] = useState(false)
+  const [preferenceError, setPreferenceError] = useState(false)
   return <main className="settings-page live-storage-page" aria-labelledby="live-storage-title">
     <nav className="live-storage-page__navigation" aria-label={ru ? 'Навигация Live Storage' : 'Live Storage navigation'}>
       <button type="button" aria-current={screen === 'home' ? 'page' : undefined} onClick={() => setScreen('home')}>
@@ -41,6 +45,16 @@ export default function LiveStoragePage({ account, journalSync, language, onSave
       <section className="live-storage-page__card" aria-labelledby="live-account-title">
         <h2 id="live-account-title"><UserRound size={19} aria-hidden="true" />Live Account</h2>
         {account ?? <p className="settings-page__description">{ru ? 'Вход в аккаунт пока недоступен. Ваши данные на этом устройстве не меняются.' : 'Account sign-in is currently unavailable. Data on this device is unchanged.'}</p>}
+        {onOnboardingChange && typeof onboardingDisabled === 'boolean' && <div className="live-storage-page__preference">
+          <label><span><strong>{ru ? 'Отключить вводные экраны' : 'Skip intro screens'}</strong><small>{ru ? 'Для этого аккаунта во всех подключённых сервисах.' : 'For this account across connected services.'}</small></span>
+            <input type="checkbox" role="switch" checked={onboardingDisabled} disabled={savingPreference} onChange={event => {
+              setSavingPreference(true)
+              setPreferenceError(false)
+              void onOnboardingChange(event.currentTarget.checked).then(saved => setPreferenceError(!saved)).catch(() => setPreferenceError(true)).finally(() => setSavingPreference(false))
+            }} />
+          </label>
+          {preferenceError && <p role="alert">{ru ? 'Не удалось сохранить настройку. Повторите позже.' : 'Could not save the setting. Try again later.'}</p>}
+        </div>}
       </section>
     </div>}
     {screen === 'journal' && <div className="live-storage-page__sections">

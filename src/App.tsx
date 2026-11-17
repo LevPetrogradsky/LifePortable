@@ -22,7 +22,7 @@ import { applyFocusPreset, findFocusPreset, type FocusPresetId } from './presets
 import { useDeleteUndo } from './delete-undo'
 import UnifiedSearch from './search/UnifiedSearch'
 import type { AccountEntryMode } from './settings/AccountPanel'
-import WebOnboarding, { type OnboardingDestination } from './onboarding/WebOnboarding'
+import OnePageOnboarding from './onboarding/OnePageOnboarding'
 import { completionKey, initialOnboardingMode } from './onboarding/state'
 import { translate, type AppLanguage } from './language'
 import './reflection-confirmation.css'
@@ -36,7 +36,7 @@ const serviceLabels = { tasks: 'LiveTasks', journal: 'LiveJournal', focus: 'Live
 const factors: Factor[] = ['Meaningful Goal', 'Personal Control', 'Fast Feedback', 'Other']
 const repoUrl = repositoryUrl
 
-function App({ storageKey, account, existingAccount = false, journalCloudToken, guestCloud = false }: { storageKey?: string; account?: (language: AppLanguage, initialMode?: AccountEntryMode) => ReactNode; existingAccount?: boolean; journalCloudToken?: () => Promise<string | null>; guestCloud?: boolean }) {
+function App({ storageKey, account, existingAccount = false, journalCloudToken, guestCloud = false, accountOnboardingPreference, onAccountOnboardingChange }: { storageKey?: string; account?: (language: AppLanguage, initialMode?: AccountEntryMode) => ReactNode; existingAccount?: boolean; journalCloudToken?: () => Promise<string | null>; guestCloud?: boolean; accountOnboardingPreference?: boolean | null; onAccountOnboardingChange?: (disabled: boolean) => Promise<boolean> }) {
   const effectiveStorageKey = storageKey ?? STORAGE_KEY
   const [cloudEnabled, setCloudEnabled] = useState(() => {
     try { return Boolean(journalCloudToken && localStorage.getItem(cloudConsentKey(effectiveStorageKey)) === 'true' && (!guestCloud || readRecoveryCode())) }
@@ -44,7 +44,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   })
   const [recoveryCode, setRecoveryCode] = useState(() => guestCloud ? readRecoveryCode() : null)
   const [loadResult, setLoadResult] = useState(() => loadData(storageKey))
-  const [onboardingMode, setOnboardingMode] = useState(() => serviceMode === 'hub' ? initialOnboardingMode(storageKey, localStorage, window.location.search, existingAccount) : null)
+  const [onboardingMode, setOnboardingMode] = useState(() => serviceMode === 'hub' ? initialOnboardingMode(storageKey, localStorage, window.location.search, accountOnboardingPreference === true || (existingAccount && accountOnboardingPreference == null)) : null)
   const data = loadResult.data
   const language = data.language ?? 'en'
   const timeFormat = data.timeFormat ?? (language === 'ru' ? '24' : '12')
@@ -710,19 +710,21 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
     window.history.replaceState(null, '', url.pathname + url.search + url.hash)
   }
 
-  const finishOnboarding = (name: string, destination: OnboardingDestination) => {
+  const finishOnboarding = async (name: string, disableAll: boolean) => {
     if (onboardingMode === 'first-run') {
+      if (disableAll && onAccountOnboardingChange && !await onAccountOnboardingChange(true)) return false
       if (!update(current => ({ ...current, displayName: name || undefined }))) return false
       try { localStorage.setItem(completionKey(storageKey), 'done') } catch { /* Saved data itself marks an existing user. */ }
     }
     clearOnboardingPreviewUrl()
     setOnboardingMode(null)
-    navigate(destination === 'focus' ? 'presets' : destination)
+    navigate('main')
     return true
   }
 
-  if (onboardingMode) return <WebOnboarding mode={onboardingMode} displayName={data.displayName ?? ''} language={language}
+  if (onboardingMode) return <OnePageOnboarding mode={onboardingMode} displayName={data.displayName ?? ''} language={language}
     account={account && !existingAccount ? mode => account(language, mode) : undefined}
+    accountPreferenceAvailable={Boolean(onAccountOnboardingChange)}
     onComplete={finishOnboarding} onClose={() => { clearOnboardingPreviewUrl(); setOnboardingMode(null) }} />
 
   if (data.activeSession && ((!pausedSession && minimizedFocusScreen !== data.activeSession.id) ||
@@ -909,6 +911,8 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
           onBack={() => navigate(storageReturnView)}
           onHub={() => navigate('main')}
           showContextBack={storageReturnView === 'settings'}
+          onboardingDisabled={accountOnboardingPreference}
+          onOnboardingChange={onAccountOnboardingChange}
           backLabel={storageReturnView === 'settings' ? (language === 'ru' ? 'Назад к настройкам' : 'Back to Settings') : t('Back to Hub')}
         />}
 

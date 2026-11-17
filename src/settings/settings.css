@@ -72,6 +72,12 @@
 .live-storage-page__card { min-width: 0; padding: 19px; border: 1px solid var(--settings-line); border-radius: 20px; background: var(--settings-surface); }
 .live-storage-page__card h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; font-size: 20px; }
 .live-storage-page__card > .settings-page__journal-sync { margin-top: 0; }
+.live-storage-page__preference { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--settings-line); }
+.live-storage-page__preference label { display: flex; align-items: center; gap: 16px; }
+.live-storage-page__preference label span { display: grid; flex: 1; gap: 4px; }
+.live-storage-page__preference label small { color: var(--settings-muted); line-height: 1.4; }
+.live-storage-page__preference input { width: 20px; height: 20px; flex: none; accent-color: var(--settings-accent); }
+.live-storage-page__preference p { margin: 10px 0 0; color: #b33b30; font-size: 13px; }
 .live-storage-page__navigation button:focus-visible,
 .live-storage-page__home button:focus-visible { outline: 2px solid var(--settings-accent); outline-offset: 3px; }
 

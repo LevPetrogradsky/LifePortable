@@ -3,8 +3,9 @@ import { accountAuth, type AccountAuth } from './accounts'
 import AccountPanel from './settings/AccountPanel'
 import { STORAGE_KEY } from './data'
 import { readRecoveryCode } from './journal/guest-recovery'
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { translate } from './language'
+import { readAccountOnboardingPreference, writeAccountOnboardingPreference } from './onboarding/preference'
 
 function ResetPassword({ auth, token, onDone }: { auth: AccountAuth; token: string; onDone: () => void }) {
   const [password, setPassword] = useState('')
@@ -49,6 +50,19 @@ function ResetPassword({ auth, token, onDone }: { auth: AccountAuth; token: stri
 
 function ConnectedApp({ auth }: { auth: AccountAuth }) {
   const { data, isPending, error, refetch } = auth.useSession()
+  const user = data?.user
+  const [onboardingPreference, setOnboardingPreference] = useState<boolean | null | undefined>()
+  const getToken = async () => {
+    const token = (await auth.getSession({ fetchOptions: { headers: { 'X-Force-Fetch': 'true' } } })).data?.session?.token
+    return token?.split('.').length === 3 ? token : null
+  }
+  useEffect(() => {
+    if (!user) { setOnboardingPreference(null); return }
+    let current = true
+    setOnboardingPreference(undefined)
+    void readAccountOnboardingPreference(getToken).then(value => { if (current) setOnboardingPreference(value) })
+    return () => { current = false }
+  }, [user?.id])
   const guestToken = import.meta.env.VITE_JOURNAL_SYNC_ENABLED === 'true'
     ? async () => { const code = readRecoveryCode(); return code ? `Guest ${code}` : null }
     : undefined
@@ -58,9 +72,15 @@ function ConnectedApp({ auth }: { auth: AccountAuth }) {
     <button type="button" className="settings-page__action" onClick={() => void refetch()}>{translate(language, 'Try again')}</button>
   </div>} existingAccount />
 
-  const user = data?.user
+  if (user && onboardingPreference === undefined) return <main className="settings-page"><p role="status">Opening LiveHub...</p></main>
   const storageKey = user ? `${STORAGE_KEY}.neon.${user.id}` : undefined
   return <App key={storageKey ?? STORAGE_KEY} storageKey={storageKey} existingAccount={Boolean(user)}
+    accountOnboardingPreference={user ? onboardingPreference : undefined}
+    onAccountOnboardingChange={user && onboardingPreference !== null ? async disabled => {
+      const saved = await writeAccountOnboardingPreference(getToken, disabled)
+      if (saved) setOnboardingPreference(disabled)
+      return saved
+    } : undefined}
     guestCloud={!user}
     journalCloudToken={user && import.meta.env.VITE_JOURNAL_SYNC_ENABLED === 'true'
       ? async () => {

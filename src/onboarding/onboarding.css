@@ -96,6 +96,13 @@
 .lifeos-onboarding__primary { display: block; width: min(100%, 472px); min-height: 56px; margin: 0 auto; border: 0; border-radius: 18px; background: var(--onboarding-accent); color: #fff; font-size: 17px; font-weight: 700; }
 [data-theme='dark'] .lifeos-onboarding__primary { color: #102033; }
 .lifeos-onboarding__error { width: min(100%, 472px); margin: 0 auto 8px; color: #b33b30; font-size: 13px; }
+.lifeos-onboarding__one-page { max-width: 540px; width: 100%; margin-inline: auto; }
+.lifeos-onboarding__one-page .lifeos-onboarding__items { margin-top: 20px; gap: 9px; }
+.lifeos-onboarding__one-page .lifeos-onboarding__feature { min-height: 58px; padding: 9px 12px; border-radius: 14px; }
+.lifeos-onboarding__one-page .lifeos-onboarding__name { margin-top: 20px; gap: 8px; }
+.lifeos-onboarding__global-choice { display: flex; align-items: flex-start; gap: 10px; margin-top: 20px; color: var(--onboarding-ink); font-size: 14px; line-height: 1.45; }
+.lifeos-onboarding__global-choice input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--onboarding-accent); }
+.lifeos-onboarding__skip { display: block; min-height: 42px; margin: 8px auto 0; padding: 5px 12px; border: 0; background: transparent; color: var(--onboarding-accent); font: inherit; font-size: 13px; font-weight: 700; }
 .lifeos-onboarding__account-options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
