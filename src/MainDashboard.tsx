@@ -306,6 +306,10 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
           <strong>LiveClients</strong>
         </a>
         <div className="life-main-service-soon">
+          <span className="life-main-shortcut-icon future"><Settings2 size={21} aria-hidden="true" /></span>
+          <span className="life-main-service-copy"><strong>LiveManage</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
+        </div>
+        <div className="life-main-service-soon">
           <span className="life-main-shortcut-icon future"><BookText size={21} aria-hidden="true" /></span>
           <span className="life-main-service-copy"><strong>LiveBible</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
         </div>
