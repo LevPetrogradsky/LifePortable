@@ -296,7 +296,7 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
         </button>}
         {onAI && <button type="button" onClick={onAI}>
           <span className="life-main-shortcut-icon ai"><Sparkles size={21} aria-hidden="true" /></span>
-          <strong>Live AI</strong>
+          <strong>LiveAI</strong>
         </button>}
         <div className="life-main-service-soon">
           <span className="life-main-shortcut-icon future"><Settings2 size={21} aria-hidden="true" /></span>

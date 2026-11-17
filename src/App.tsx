@@ -852,7 +852,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
         </main>}
 
         {view === 'ai' && <main className="life-main life-main-guide-page">
-          <h1>Live AI</h1>
+          <h1>LiveAI</h1>
           <p className="life-main-guide-intro">{language === 'ru' ? 'Подключите провайдера для ответов о приложении.' : 'Connect a provider for answers about the app.'}</p>
           <AskLiveOS mode="ai" language={language} actions={{
             tasks: () => navigate('tasks'),
