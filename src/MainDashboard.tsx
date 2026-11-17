@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
-import { ArrowLeft, ArrowRight, BookOpen, BookText, BriefcaseBusiness, CalendarDays, Check, ChevronRight, Circle, ClipboardList, Code2, Dumbbell, Flag, Github, GripHorizontal, HardDrive, Heart, ListTodo, Maximize2, Pause, Pencil, Play, Plus, Search, Settings2, ShieldCheck, Sparkles, Trash2, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BookOpen, BookText, BriefcaseBusiness, CalendarDays, Check, ChevronRight, Circle, ClipboardList, Code2, Dumbbell, Flag, Gamepad2, Github, GripHorizontal, HardDrive, Heart, ListTodo, Maximize2, Pause, Pencil, Play, Plus, Search, Settings2, ShieldCheck, Sparkles, Trash2, X } from 'lucide-react'
 import { taskLists, type LiveOSData, type Task, type TaskList } from './data'
 import { todayTaskLimit } from './task-rules'
 import { translate } from './language'
@@ -222,7 +222,7 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
 
   const hubLinks = <nav className="life-main-today-links" aria-label={language === 'ru' ? 'Ссылки сообщества' : 'Community links'}>
     <a className="life-main-discord" href="https://discord.gg/y4s67MzZr" target="_blank" rel="noopener noreferrer">
-      {language === 'ru' ? 'Вступить в Discord' : 'Join Discord'} <ArrowRight size={15} aria-hidden="true" />
+      <Gamepad2 size={15} aria-hidden="true" /> {language === 'ru' ? 'Вступить в Discord' : 'Join Discord'}
     </a>
     <a className="life-main-github" href={repoUrl} target="_blank" rel="noopener noreferrer">
       <Github size={15} aria-hidden="true" /> {t('View on GitHub')}
