@@ -29,9 +29,9 @@ import { mobileNavigationLayout } from './mobile-navigation'
 
 type View = Exclude<Shortcut, 'focus'> | 'main' | 'ask' | 'settings' | 'focus-history' | 'presets'
 const shortcutIcons = { tasks: ClipboardList, journal: BookOpen, focus: Play, flow: MessageCircle }
-const serviceLabels = { tasks: 'Life Tasks', journal: 'Life Journal', focus: 'LifeTime', flow: '3 questions' }
+const serviceLabels = { tasks: 'LivePortableTasks', journal: 'LivePortableJournal', focus: 'LivePortableTime', flow: '3 questions' }
 const factors: Factor[] = ['Meaningful Goal', 'Personal Control', 'Fast Feedback', 'Other']
-const repoUrl = 'https://github.com/LevPetrogradsky/LiveOS-Portable'
+const repoUrl = 'https://github.com/LevPetrogradsky/LivePortable'
 
 function App({ storageKey, account, existingAccount = false, journalCloudToken, guestCloud = false }: { storageKey?: string; account?: (language: AppLanguage, initialMode?: AccountEntryMode) => ReactNode; existingAccount?: boolean; journalCloudToken?: () => Promise<string | null>; guestCloud?: boolean }) {
   const effectiveStorageKey = storageKey ?? STORAGE_KEY

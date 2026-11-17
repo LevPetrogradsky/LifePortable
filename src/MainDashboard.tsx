@@ -85,6 +85,10 @@ function BreakCard({ taskTitle, activeTime, showTime, running, language, onPause
   </section>
 }
 
+function ServiceName({ suffix }: { suffix: string }) {
+  return <strong className="life-main-service-name">LivePortable<wbr />{suffix}</strong>
+}
+
 export default function MainDashboard({ initialScreen = 'home', onReturnHome, returnLabel, showTasksShortcut, showFocusShortcut, searchIncludesJournal, repoUrl, tasks, focusTaskTitle, focusRunning = false, pausedActiveTime, showPausedTime = true, displayName, language = 'en', onPauseFocus, onContinueFocus, onReturnToFocus, onFinishPaused, onCancelFocus, onUpdate, onOpenTask, onDeleteTask, onStart, onStartOpenFocus, onJournal, onFocusHistory, onSettings, onSearch }: MainDashboardProps) {
   const t = (text: string) => translate(language, text)
   const [screen, setScreen] = useState(initialScreen)
@@ -117,9 +121,7 @@ export default function MainDashboard({ initialScreen = 'home', onReturnHome, re
   const completed = tasks.filter(task => task.completedAt !== null)
     .sort((a, b) => Date.parse(b.completedAt!) - Date.parse(a.completedAt!))
   const doneToday = completed.filter(task => taskList(task) === 'today' && new Date(task.completedAt!).toDateString() === today)
-  const nextTask = activeToday[0]
   const todayIsFull = activeToday.length >= todayTaskLimit
-  const totalToday = activeToday.length + doneToday.length
   const editorTask = editor?.id ? tasks.find(task => task.id === editor.id) : undefined
   const cannotAddToToday = todayIsFull && !(editorTask && (editorTask.completedAt || taskList(editorTask) === 'today'))
   const visibleActive = filter === 'completed' ? [] : active.filter(task => taskList(task) === filter)
@@ -144,10 +146,9 @@ export default function MainDashboard({ initialScreen = 'home', onReturnHome, re
     setEditor({ id: null, title: '', list })
   }
 
-  const openTasks = (add = false) => {
+  const openTasks = () => {
     showList('today')
     setScreen('tasks')
-    if (add) addTo(todayIsFull ? 'someday' : 'today')
   }
 
   const saveTask = (event: FormEvent) => {
@@ -221,11 +222,6 @@ export default function MainDashboard({ initialScreen = 'home', onReturnHome, re
 
   const breakCard = focusTaskTitle !== undefined && <BreakCard taskTitle={focusTaskTitle} activeTime={pausedActiveTime ?? '00:00:00'} showTime={showPausedTime} running={focusRunning} language={language}
     onPause={onPauseFocus} onContinue={onContinueFocus} onReturn={onReturnToFocus} onFinish={onFinishPaused} onCancel={onCancelFocus} />
-  const addTaskButton = <button type="button" className={`life-main-add-task${!nextTask && !breakCard ? ' life-main-add-task-inline' : ''}`} onClick={() => openTasks(true)}>
-    <span className="life-main-shortcut-icon add"><Plus size={21} aria-hidden="true" /></span>
-    <strong>{t('Add a task')}</strong>
-  </button>
-
   if (screen === 'home') return <main className="life-main life-main-home">
     <header className="life-main-hero">
       <div><span className="life-main-hub-name">OS</span><h1 ref={heading} tabIndex={-1}>{language === 'ru' ? 'Добро пожаловать' : 'Welcome'}{displayName?.trim() ? `, ${displayName.trim()}` : ''}!</h1>
@@ -252,79 +248,55 @@ export default function MainDashboard({ initialScreen = 'home', onReturnHome, re
     </header>
 
     <div className="life-main-stack">
-      {breakCard || <section className="life-main-today" aria-labelledby="life-main-today">
-        <div className="life-main-today-heading">
-          <h2 id="life-main-today">{t('Today')}</h2>
-          {totalToday > 0 && <span>{doneToday.length} / {totalToday} {language === 'ru' ? 'выполнено' : 'done'}</span>}
-        </div>
-        {totalToday > 0 && <progress max={totalToday} value={doneToday.length} aria-label="Today’s task progress" />}
-        {nextTask ? <>
-          <div className="life-main-next">
-            <button type="button" className="life-main-complete" aria-label={`Complete ${nextTask.title}`} onClick={() => toggleTask(nextTask)}><Circle size={22} /></button>
-            <div>
-              <button type="button" className="life-main-task-link" aria-haspopup="dialog" onClick={() => onOpenTask(nextTask.id)}>
-                <span>{nextTask.title}</span><ChevronRight size={16} aria-hidden="true" />
-              </button>
-              <p>{t('Next up')}</p>
-            </div>
-            <button type="button" className="life-main-icon life-main-start-small" aria-label={`Start ${nextTask.title}`} onClick={() => onStart(nextTask)}>
-              <Play size={17} fill="currentColor" aria-hidden="true" />
-            </button>
-          </div>
-        </> : <div className="life-main-today-empty-state">
-          <p className="life-main-today-empty">{t(doneToday.length ? 'You’re all caught up' : 'No tasks for today')}</p>
-          {addTaskButton}
-        </div>}
-      </section>}
+      {breakCard}
 
-      {(nextTask || breakCard) && addTaskButton}
-
-      <section className="life-main-services" aria-labelledby="life-main-services-title">
-      <h2 id="life-main-services-title">Live Services</h2>
-      <nav className="life-main-shortcuts" aria-label="Live Services">
-        {showTasksShortcut && <button type="button" onClick={() => openTasks()}>
-          <span className="life-main-shortcut-icon tasks"><ClipboardList size={21} aria-hidden="true" /></span>
-          <strong>Life Tasks</strong>
-        </button>}
-        {onJournal && <button type="button" onClick={onJournal}>
-          <span className="life-main-shortcut-icon journal"><BookOpen size={21} aria-hidden="true" /></span>
-          <strong>Life Journal</strong>
-        </button>}
-        {showFocusShortcut && <button type="button" onClick={breakCard ? onReturnToFocus : onStartOpenFocus}>
-          <span className="life-main-shortcut-icon focus"><Play size={21} aria-hidden="true" /></span>
-          <strong>{breakCard ? (language === 'ru' ? 'К таймеру' : 'Return to timer') : 'LifeTime'}</strong>
-        </button>}
-        <a href="https://gymos-preview.vercel.app/" target="_blank" rel="noopener noreferrer"
-          aria-label={language === 'ru' ? 'Открыть LifeGym в новой вкладке' : 'Open LifeGym in a new tab'}>
-          <span className="life-main-shortcut-icon gym"><Dumbbell size={21} aria-hidden="true" /></span>
-          <strong>LifeGym</strong>
-        </a>
-        <a href="https://clients-manager-dad-demo.vercel.app/login" target="_blank" rel="noopener noreferrer"
-          aria-label={language === 'ru' ? 'Открыть страницу входа LifeClients в новой вкладке' : 'Open LifeClients sign-in in a new tab'}>
-          <span className="life-main-shortcut-icon clients"><BriefcaseBusiness size={21} aria-hidden="true" /></span>
-          <strong>LifeClients</strong>
-        </a>
-        <div className="life-main-service-soon">
-          <span className="life-main-shortcut-icon future"><BookText size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LifeBible</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
-        </div>
-        <div className="life-main-service-soon">
-          <span className="life-main-shortcut-icon future"><Code2 size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LifeCode</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
-        </div>
-        <div className="life-main-service-soon">
-          <span className="life-main-shortcut-icon future"><ShieldCheck size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LifeSecure</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
-        </div>
-        <div className="life-main-service-soon">
-          <span className="life-main-shortcut-icon future"><CalendarDays size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>Life Plan</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
-        </div>
-      </nav>
-      </section>
       <button type="button" className="life-main-text life-main-history-link" onClick={onFocusHistory}>
         <History size={17} aria-hidden="true" /> {t('Focus history')} <ChevronRight size={15} aria-hidden="true" />
       </button>
+
+      <section className="life-main-services" aria-labelledby="life-main-services-title">
+      <h2 id="life-main-services-title">Services</h2>
+      <nav className="life-main-shortcuts" aria-label="Services">
+        {showTasksShortcut && <button type="button" onClick={() => openTasks()}>
+          <span className="life-main-shortcut-icon tasks"><ClipboardList size={21} aria-hidden="true" /></span>
+          <ServiceName suffix="Tasks" />
+        </button>}
+        {onJournal && <button type="button" onClick={onJournal}>
+          <span className="life-main-shortcut-icon journal"><BookOpen size={21} aria-hidden="true" /></span>
+          <ServiceName suffix="Journal" />
+        </button>}
+        {showFocusShortcut && <button type="button" onClick={breakCard ? onReturnToFocus : onStartOpenFocus}>
+          <span className="life-main-shortcut-icon focus"><Play size={21} aria-hidden="true" /></span>
+          <ServiceName suffix="Time" />
+        </button>}
+        <a href="https://gymos-preview.vercel.app/" target="_blank" rel="noopener noreferrer"
+          aria-label={language === 'ru' ? 'Открыть LivePortableGym в новой вкладке' : 'Open LivePortableGym in a new tab'}>
+          <span className="life-main-shortcut-icon gym"><Dumbbell size={21} aria-hidden="true" /></span>
+          <ServiceName suffix="Gym" />
+        </a>
+        <a href="https://clients-manager-dad-demo.vercel.app/login" target="_blank" rel="noopener noreferrer"
+          aria-label={language === 'ru' ? 'Открыть страницу входа LivePortableClients в новой вкладке' : 'Open LivePortableClients sign-in in a new tab'}>
+          <span className="life-main-shortcut-icon clients"><BriefcaseBusiness size={21} aria-hidden="true" /></span>
+          <ServiceName suffix="Clients" />
+        </a>
+        <div className="life-main-service-soon">
+          <span className="life-main-shortcut-icon future"><BookText size={21} aria-hidden="true" /></span>
+          <span className="life-main-service-copy"><ServiceName suffix="Bible" /><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
+        </div>
+        <div className="life-main-service-soon">
+          <span className="life-main-shortcut-icon future"><Code2 size={21} aria-hidden="true" /></span>
+          <span className="life-main-service-copy"><ServiceName suffix="Code" /><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
+        </div>
+        <div className="life-main-service-soon">
+          <span className="life-main-shortcut-icon future"><ShieldCheck size={21} aria-hidden="true" /></span>
+          <span className="life-main-service-copy"><ServiceName suffix="Secure" /><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
+        </div>
+        <div className="life-main-service-soon">
+          <span className="life-main-shortcut-icon future"><CalendarDays size={21} aria-hidden="true" /></span>
+          <span className="life-main-service-copy"><ServiceName suffix="Plan" /><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
+        </div>
+      </nav>
+      </section>
     </div>
   </main>
 
@@ -339,7 +311,7 @@ export default function MainDashboard({ initialScreen = 'home', onReturnHome, re
         if (onReturnHome) onReturnHome()
         else { setScreen('home'); showList('today') }
       }}><ArrowLeft size={21} /></button>
-      <h1 ref={heading} tabIndex={-1}>Life Tasks</h1>
+      <h1 ref={heading} tabIndex={-1}>LivePortable<wbr />Tasks</h1>
       <button type="button" className="life-main-icon" aria-label={t('Add task')} aria-haspopup="dialog" disabled={!canAdd} onClick={() => addTo(addList)}><Plus size={23} /></button>
     </header>
 

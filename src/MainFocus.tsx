@@ -121,7 +121,7 @@ export default function MainFocus({
     <header className="life-main-focus-top">
       <button type="button" aria-label={language === 'ru' ? `${paused ? 'Вернуться' : 'Поставить на паузу и вернуться'}: ${t(returnDestination)}` : paused ? `Back to ${returnDestination}` : `Pause and return to ${returnDestination}`}
         title={language === 'ru' ? `Вернуться: ${t(returnDestination)}` : `Back to ${returnDestination}`} onClick={onLeave}><ArrowLeft size={22} aria-hidden="true" /></button>
-      <h1>LifeTime</h1>
+      <h1>LivePortable<wbr />Time</h1>
       <button ref={dialogTrigger} type="button" aria-label={t('Focus options')} aria-haspopup="dialog"
         onClick={() => dialog.current?.showModal()}><Ellipsis size={23} /></button>
     </header>

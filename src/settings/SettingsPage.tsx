@@ -6,7 +6,7 @@ import InteractiveTip from '../InteractiveTip'
 import JournalCloudPanel, { type JournalCloudControls } from './JournalCloudPanel'
 import './settings.css'
 
-const shortcutNames = { tasks: 'Life Tasks', journal: 'Life Journal', focus: 'LifeTime', flow: '3 questions' }
+const shortcutNames = { tasks: 'LivePortableTasks', journal: 'LivePortableJournal', focus: 'LivePortableTime', flow: '3 questions' }
 
 interface SettingsPageProps {
   account?: ReactNode

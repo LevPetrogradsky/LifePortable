@@ -372,6 +372,13 @@
   color: var(--main-muted);
 }
 
+.life-main-shortcuts .life-main-service-name {
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
 .life-main-service-copy { display: grid; gap: 2px; min-width: 0; }
 .life-main-service-copy small { color: var(--main-muted); font-size: 11px; }
 
@@ -453,11 +460,16 @@
 
 .life-main-tasks-header h1 {
   flex: 1;
+  min-width: 0;
   font-size: clamp(36px, 6vw, 52px);
   font-weight: 800;
   letter-spacing: -.045em;
   line-height: 1.08;
   margin: 0;
+}
+
+@media (max-width: 600px) {
+  .life-main-tasks-header h1 { font-size: clamp(23px, 6.5vw, 30px); }
 }
 
 .life-main-tasks-header .life-main-icon {
@@ -806,6 +818,12 @@
   font-weight: 750;
 }
 
+.life-main-focus-top h1 { min-width: 0; text-align: center; }
+
+@media (max-width: 520px) {
+  .life-main-focus-top h1 { font-size: 18px; }
+}
+
 .life-main-focus-center {
   align-self: center;
   justify-self: center;
@@ -981,7 +999,7 @@
   }
 
   .life-main-shortcuts .life-main-shortcut-icon { width: 34px; height: 34px; }
-  .life-main-shortcuts strong { font-size: 13px; }
+  .life-main-shortcuts .life-main-service-name { font-size: 11px; }
 }
 
 .life-main-break {
