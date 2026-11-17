@@ -26,6 +26,7 @@ import { translate, type AppLanguage } from './language'
 import './reflection-confirmation.css'
 import './mobile-navigation.css'
 import { mobileNavigationLayout } from './mobile-navigation'
+import { serviceMode } from './service-mode'
 
 type View = Exclude<Shortcut, 'focus'> | 'main' | 'ask' | 'settings' | 'focus-history' | 'presets'
 const shortcutIcons = { tasks: ClipboardList, journal: BookOpen, focus: Play, flow: MessageCircle }
@@ -41,7 +42,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   })
   const [recoveryCode, setRecoveryCode] = useState(() => guestCloud ? readRecoveryCode() : null)
   const [loadResult, setLoadResult] = useState(() => loadData(storageKey))
-  const [onboardingMode, setOnboardingMode] = useState(() => initialOnboardingMode(storageKey, localStorage, window.location.search, existingAccount))
+  const [onboardingMode, setOnboardingMode] = useState(() => serviceMode === 'hub' ? initialOnboardingMode(storageKey, localStorage, window.location.search, existingAccount) : null)
   const data = loadResult.data
   const language = data.language ?? 'en'
   const timeFormat = data.timeFormat ?? (language === 'ru' ? '24' : '12')
@@ -49,13 +50,13 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   const accountContent = account?.(language)
   const dataRef = useRef(data)
   const hiddenSections = data.hiddenSections ?? []
-  const showHome = !hiddenSections.includes('main')
-  const showAskLiveOS = data.askLiveOSInBar === true
+  const showHome = serviceMode === 'hub' && !hiddenSections.includes('main')
+  const showAskLiveOS = serviceMode === 'hub' && data.askLiveOSInBar === true
   const onHome = (id: Shortcut) => shortcutVisible(data, id, 'home')
-  const inBar = (id: Shortcut) => shortcutVisible(data, id, 'bar')
-  const defaultView = showHome ? 'main' : (['journal', 'tasks'] as const).find(inBar) ?? 'settings'
+  const inBar = (id: Shortcut) => serviceMode === 'hub' ? shortcutVisible(data, id, 'bar') : id === serviceMode || (serviceMode === 'time' && id === 'focus')
+  const defaultView: View = serviceMode === 'time' ? 'presets' : serviceMode === 'tasks' || serviceMode === 'journal' ? serviceMode : showHome ? 'main' : (['journal', 'tasks'] as const).find(inBar) ?? 'settings'
   const [requestedView, setView] = useState<View>(() => {
-    try { return localStorage.getItem(`${storageKey ?? STORAGE_KEY}.last-view`) === 'journal' ? 'journal' : defaultView }
+    try { return serviceMode === 'hub' && localStorage.getItem(`${storageKey ?? STORAGE_KEY}.last-view`) === 'journal' ? 'journal' : defaultView }
     catch { return defaultView }
   })
   const [homeNavigationKey, setHomeNavigationKey] = useState(0)
@@ -65,6 +66,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   const [postFocusReflection, setPostFocusReflection] = useState(false)
   const isHidden = (page: View) => page === 'main' ? !showHome
     : page === 'flow' ? !postFocusReflection
+      : serviceMode !== 'hub' && page === 'journal' && serviceMode !== 'journal' ? true
       : page === 'journal' && !inBar(page) && !(showHome && onHome(page))
   const view = isHidden(requestedView) ? defaultView : requestedView
   const showJournal = !isHidden('journal')
