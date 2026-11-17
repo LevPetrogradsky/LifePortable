@@ -889,6 +889,8 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
           language={language}
           onSaveCopy={exportData}
           onBack={() => navigate(storageReturnView)}
+          onHub={() => navigate('main')}
+          showContextBack={storageReturnView === 'settings'}
           backLabel={storageReturnView === 'settings' ? (language === 'ru' ? 'Назад к настройкам' : 'Back to Settings') : t('Back to Hub')}
         />}
 

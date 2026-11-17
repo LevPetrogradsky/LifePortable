@@ -36,30 +36,44 @@
   line-height: 1.08;
 }
 
-.live-storage-page__back {
+.live-storage-page__navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.live-storage-page__navigation button {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   min-height: 44px;
-  margin-bottom: 22px;
-  padding: 8px 0;
-  border: 0;
-  background: transparent;
+  padding: 8px 12px;
+  border: 1px solid var(--settings-line);
+  border-radius: 11px;
+  background: var(--settings-surface);
   color: var(--settings-accent);
   font: inherit;
   font-weight: 700;
   cursor: pointer;
 }
+.live-storage-page__navigation button[aria-current="page"] { background: var(--settings-tint); }
 
 .live-storage-page__heading { display: flex; align-items: center; gap: 16px; margin-bottom: 25px; }
 .live-storage-page__heading h1 { margin: 0 0 4px; }
 .live-storage-page__heading p { margin: 0; color: var(--settings-muted); line-height: 1.45; }
 .live-storage-page__mark { display: grid; flex: none; width: 52px; height: 52px; place-items: center; border-radius: 16px; background: var(--settings-tint); color: var(--settings-accent); }
 .live-storage-page__sections { display: grid; gap: 16px; }
+.live-storage-page__home { display: grid; gap: 12px; }
+.live-storage-page__home button { display: flex; align-items: center; gap: 13px; min-height: 76px; padding: 16px; border: 1px solid var(--settings-line); border-radius: 17px; background: var(--settings-surface); color: var(--settings-text); text-align: left; cursor: pointer; }
+.live-storage-page__home button span { display: grid; flex: 1; gap: 4px; }
+.live-storage-page__home button small { color: var(--settings-muted); }
+.live-storage-page__home button > svg:first-child { color: var(--settings-accent); }
+.live-storage-page__home button:hover { border-color: var(--settings-accent); }
 .live-storage-page__card { min-width: 0; padding: 19px; border: 1px solid var(--settings-line); border-radius: 20px; background: var(--settings-surface); }
 .live-storage-page__card h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; font-size: 20px; }
 .live-storage-page__card > .settings-page__journal-sync { margin-top: 0; }
-.live-storage-page__back:focus-visible { outline: 2px solid var(--settings-accent); outline-offset: 3px; }
+.live-storage-page__navigation button:focus-visible,
+.live-storage-page__home button:focus-visible { outline: 2px solid var(--settings-accent); outline-offset: 3px; }
 
 @media (max-width: 480px) {
   .live-storage-page__heading { align-items: flex-start; gap: 12px; }
