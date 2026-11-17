@@ -120,7 +120,7 @@ function AboutLiveOS({ repoUrl, language }: { repoUrl: string; language: AppLang
       </div>
       <p className="settings-page__description">
         © 2026 LevPetrogradsky. {language === 'ru' ? 'Для личного и иного некоммерческого использования.' : 'For personal and other noncommercial use.'}{' '}
-        <a href="https://github.com/LevPetrogradsky/LiveHub/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer">
+        <a href={`${repoUrl}/blob/main/LICENSE.md`} target="_blank" rel="noopener noreferrer">
           {language === 'ru' ? 'Условия лицензии' : 'License terms'}
         </a>
       </p>
@@ -389,7 +389,7 @@ export default function SettingsPage({
           </div>
         </details>
         <SettingsGroup id="settings-target-advanced" title={t('Advanced Options')} icon={<Github size={18} />} open={openSections.advanced} onOpenChange={open => setSection('advanced', open)}>
-          <a id="settings-target-fork-link" className="settings-page__action" href="https://github.com/LevPetrogradsky/LiveHub/fork"
+          <a id="settings-target-fork-link" className="settings-page__action" href={`${repoUrl}/fork`}
             target="_blank" rel="noopener noreferrer">
             <Github size={17} aria-hidden="true" />{t('Fork on GitHub')}
             <ExternalLink className="settings-page__external" size={16} aria-hidden="true" />

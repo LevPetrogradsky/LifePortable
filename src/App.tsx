@@ -26,13 +26,13 @@ import { translate, type AppLanguage } from './language'
 import './reflection-confirmation.css'
 import './mobile-navigation.css'
 import { mobileNavigationLayout } from './mobile-navigation'
-import { serviceMode } from './service-mode'
+import { repositoryUrl, serviceMode, serviceName } from './service-mode'
 
 type View = Exclude<Shortcut, 'focus'> | 'main' | 'ask' | 'settings' | 'focus-history' | 'presets'
 const shortcutIcons = { tasks: ClipboardList, journal: BookOpen, focus: Play, flow: MessageCircle }
 const serviceLabels = { tasks: 'LiveTasks', journal: 'LiveJournal', focus: 'LiveTime', flow: '3 questions' }
 const factors: Factor[] = ['Meaningful Goal', 'Personal Control', 'Fast Feedback', 'Other']
-const repoUrl = 'https://github.com/LevPetrogradsky/LiveHub'
+const repoUrl = repositoryUrl
 
 function App({ storageKey, account, existingAccount = false, journalCloudToken, guestCloud = false }: { storageKey?: string; account?: (language: AppLanguage, initialMode?: AccountEntryMode) => ReactNode; existingAccount?: boolean; journalCloudToken?: () => Promise<string | null>; guestCloud?: boolean }) {
   const effectiveStorageKey = storageKey ?? STORAGE_KEY
@@ -666,9 +666,9 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   </>
 
   const renderBrand = (size: number) => {
-    const logo = <><span className="brand-mark"><Leaf size={size} strokeWidth={2.4} /></span><span>LiveOS Portable<span className="brand-dot">.</span></span></>
+    const logo = <><span className="brand-mark"><Leaf size={size} strokeWidth={2.4} /></span><span>{serviceName}<span className="brand-dot">.</span></span></>
     return showHome
-      ? <button className="brand" onClick={() => navigate('main')} aria-label="LiveOS Portable home">{logo}</button>
+      ? <button className="brand" onClick={() => navigate('main')} aria-label={`${serviceName} home`}>{logo}</button>
       : <div className="brand">{logo}</div>
   }
 
@@ -780,7 +780,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
       <aside className="sidebar">
         {renderBrand(20)}
         <nav aria-label="Main navigation">{renderNavigation(19)}</nav>
-        <div className="sidebar-foot"><div className="sidebar-quote"><span>✳</span><p>{t('A little space for what matters.')}</p></div><span>LiveOS Portable v0.1</span></div>
+        <div className="sidebar-foot"><div className="sidebar-quote"><span>✳</span><p>{t('A little space for what matters.')}</p></div><span>{serviceName} v0.1</span></div>
       </aside>
 
       <div className="main-area">
