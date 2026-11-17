@@ -6,7 +6,7 @@ import InteractiveTip from '../InteractiveTip'
 import JournalCloudPanel, { type JournalCloudControls } from './JournalCloudPanel'
 import './settings.css'
 
-const shortcutNames = { tasks: 'Life Tasks', journal: 'Life Journal', focus: 'LifeTime', flow: '3 questions' }
+const shortcutNames = { tasks: 'LiveTasks', journal: 'LiveJournal', focus: 'LiveTime', flow: '3 questions' }
 
 interface SettingsPageProps {
   account?: ReactNode
@@ -120,7 +120,7 @@ function AboutLiveOS({ repoUrl, language }: { repoUrl: string; language: AppLang
       </div>
       <p className="settings-page__description">
         © 2026 LevPetrogradsky. {language === 'ru' ? 'Для личного и иного некоммерческого использования.' : 'For personal and other noncommercial use.'}{' '}
-        <a href="https://github.com/LevPetrogradsky/LiveOS-Portable/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/LevPetrogradsky/LiveHub/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer">
           {language === 'ru' ? 'Условия лицензии' : 'License terms'}
         </a>
       </p>
@@ -197,8 +197,8 @@ export default function SettingsPage({
     { title: t('Save a copy'), section: 'backups', target: 'save-copy', keywords: 'export backup экспорт скачать' },
     { title: t('Restore from a copy'), section: 'backups', target: 'restore-copy', keywords: 'import backup импорт json' },
     { title: t('More options'), section: 'more', target: 'more', keywords: 'additional settings дополнительно' },
-    { title: t('OS & navigation'), section: 'navigation', target: 'navigation', keywords: 'shortcuts bar главная панель ярлыки' },
-    { title: t('OS in bottom bar'), section: 'navigation', target: 'home-bar', keywords: 'navigation навигация' },
+    { title: t('Hub & navigation'), section: 'navigation', target: 'navigation', keywords: 'shortcuts bar главная панель ярлыки' },
+    { title: t('Hub in bottom bar'), section: 'navigation', target: 'home-bar', keywords: 'navigation навигация' },
     { title: t('Guide in bottom bar'), section: 'navigation', target: 'ask-bar', keywords: 'navigation навигация' },
     ...visibleShortcuts.map(({ id }) => ({ title: shortcutNames[id], section: 'navigation' as const, target: `shortcut-${id}`, keywords: 'shortcut home bar ярлык главная панель' })),
     { title: t('About'), section: 'about', target: 'about', keywords: 'version приложение версия' },
@@ -209,7 +209,7 @@ export default function SettingsPage({
   ]
   const sectionTitle = (section: SettingsSection) => t({
     account: 'Account', profile: 'Profile & appearance', focus: 'Focus', focusOptions: 'Focus',
-    more: 'More options', backups: 'Backups', navigation: 'OS & navigation', about: 'About', advanced: 'Advanced Options',
+    more: 'More options', backups: 'Backups', navigation: 'Hub & navigation', about: 'About', advanced: 'Advanced Options',
   }[section])
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase()
   const results = normalizedQuery ? searchItems.filter(item =>
@@ -360,10 +360,10 @@ export default function SettingsPage({
             </label>
           </div>
         </SettingsGroup>
-        <SettingsGroup id="settings-target-navigation" title={t('OS & navigation')} icon={<Compass size={18} />} open={openSections.navigation} onOpenChange={open => setSection('navigation', open)}>
+        <SettingsGroup id="settings-target-navigation" title={t('Hub & navigation')} icon={<Compass size={18} />} open={openSections.navigation} onOpenChange={open => setSection('navigation', open)}>
           <label id="settings-target-home-bar" className="settings-page__toggle settings-page__navigation-toggle">
-            <span className="settings-page__toggle-copy"><strong>{t('OS in bottom bar')}</strong></span>
-            <input type="checkbox" role="switch" aria-label={t('OS in navigation bar')} checked={showHome}
+            <span className="settings-page__toggle-copy"><strong>{t('Hub in bottom bar')}</strong></span>
+            <input type="checkbox" role="switch" aria-label={t('Hub in navigation bar')} checked={showHome}
               onChange={event => onHomeVisibilityChange(event.currentTarget.checked)} />
           </label>
           <label id="settings-target-ask-bar" className="settings-page__toggle settings-page__navigation-toggle">
@@ -371,10 +371,10 @@ export default function SettingsPage({
             <input type="checkbox" role="switch" aria-label={t('Guide in navigation bar')} checked={showAskLiveOS}
               onChange={event => onAskLiveOSVisibilityChange(event.currentTarget.checked)} />
           </label>
-          {!showHome && <p className="settings-page__description">{t('OS shortcuts appear when OS is visible.')}</p>}
+          {!showHome && <p className="settings-page__description">{t('Hub shortcuts appear when Hub is visible.')}</p>}
           {visibleShortcuts.map(({ id }) => <fieldset id={`settings-target-shortcut-${id}`} key={id} className="settings-page__shortcut">
             <legend>{shortcutNames[id]}</legend>
-            {([['home', 'On OS'], ['bar', 'In navigation bar']] as const).map(([location, text]) => <label
+            {([['home', 'On Hub'], ['bar', 'In navigation bar']] as const).map(([location, text]) => <label
               className="settings-page__toggle settings-page__shortcut-option" key={location}>
               <span>{t(text)}</span>
               <input type="checkbox" role="switch" aria-label={`${shortcutNames[id]} ${t(text).toLowerCase()}`}
@@ -389,7 +389,7 @@ export default function SettingsPage({
           </div>
         </details>
         <SettingsGroup id="settings-target-advanced" title={t('Advanced Options')} icon={<Github size={18} />} open={openSections.advanced} onOpenChange={open => setSection('advanced', open)}>
-          <a id="settings-target-fork-link" className="settings-page__action" href="https://github.com/LevPetrogradsky/LiveOS-Portable/fork"
+          <a id="settings-target-fork-link" className="settings-page__action" href="https://github.com/LevPetrogradsky/LiveHub/fork"
             target="_blank" rel="noopener noreferrer">
             <Github size={17} aria-hidden="true" />{t('Fork on GitHub')}
             <ExternalLink className="settings-page__external" size={16} aria-hidden="true" />

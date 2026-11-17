@@ -29,9 +29,9 @@ import { mobileNavigationLayout } from './mobile-navigation'
 
 type View = Exclude<Shortcut, 'focus'> | 'main' | 'ask' | 'settings' | 'focus-history' | 'presets'
 const shortcutIcons = { tasks: ClipboardList, journal: BookOpen, focus: Play, flow: MessageCircle }
-const serviceLabels = { tasks: 'Life Tasks', journal: 'Life Journal', focus: 'LifeTime', flow: '3 questions' }
+const serviceLabels = { tasks: 'LiveTasks', journal: 'LiveJournal', focus: 'LiveTime', flow: '3 questions' }
 const factors: Factor[] = ['Meaningful Goal', 'Personal Control', 'Fast Feedback', 'Other']
-const repoUrl = 'https://github.com/LevPetrogradsky/LiveOS-Portable'
+const repoUrl = 'https://github.com/LevPetrogradsky/LiveHub'
 
 function App({ storageKey, account, existingAccount = false, journalCloudToken, guestCloud = false }: { storageKey?: string; account?: (language: AppLanguage, initialMode?: AccountEntryMode) => ReactNode; existingAccount?: boolean; journalCloudToken?: () => Promise<string | null>; guestCloud?: boolean }) {
   const effectiveStorageKey = storageKey ?? STORAGE_KEY
@@ -617,9 +617,9 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
     return saved
   }
 
-  const returnLabel = showHome ? 'Back to OS' : 'Back to Settings'
+  const returnLabel = showHome ? 'Back to Hub' : 'Back to Settings'
   const returnFromSection = () => navigate(showHome ? 'main' : 'settings')
-  const reflectionReturnLabel = reflectionReturnView === 'main' ? 'Back to OS'
+  const reflectionReturnLabel = reflectionReturnView === 'main' ? 'Back to Hub'
     : reflectionReturnView === 'ask' ? 'Back to Guide'
       : reflectionReturnView === 'journal' ? 'Back to Journal'
         : reflectionReturnView === 'tasks' ? 'Back to Tasks' : 'Back to Settings'
@@ -645,7 +645,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   }))
 
   const renderNavigation = (iconSize: number, bottom = false) => <>
-    {showHome && <NavButton icon={<House size={iconSize} />} label="OS" selected={view === 'main'} onClick={() => {
+    {showHome && <NavButton icon={<House size={iconSize} />} label="Hub" selected={view === 'main'} onClick={() => {
       if (view === 'main') setHomeNavigationKey(key => key + 1)
       navigate('main')
     }} />}
@@ -723,7 +723,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
       onResume={() => resumeSession()}
       onLeave={() => pauseSession(false)}
       onMinimize={minimizeFocus}
-      returnDestination={showHome ? 'OS' : shortcuts.find(({ id }) => id === defaultView)?.label ?? 'Settings'}
+      returnDestination={showHome ? 'Hub' : shortcuts.find(({ id }) => id === defaultView)?.label ?? 'Settings'}
       onFinish={endSession}
     >
       {breakReminder}

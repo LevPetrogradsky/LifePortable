@@ -5,7 +5,7 @@ import type { CloudOperation } from './journal/cloud-model.ts'
 
 export type Theme = 'light' | 'dark' | 'system'
 export const navigationSections = [
-  { id: 'main', label: 'Home' },
+  { id: 'main', label: 'Hub' },
   { id: 'flow', label: '3 questions' },
   { id: 'journal', label: 'Journal' },
 ] as const

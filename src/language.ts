@@ -2,6 +2,13 @@ export type AppLanguage = 'en' | 'ru'
 
 const russian: Record<string, string> = {
   'Home': 'Главная',
+  'Hub': 'Хаб',
+  'Hub & navigation': 'Хаб и навигация',
+  'Hub in bottom bar': 'Хаб в нижней панели',
+  'Hub in navigation bar': 'Хаб в панели навигации',
+  'Hub shortcuts appear when Hub is visible.': 'Ярлыки хаба доступны, когда он показан.',
+  'On Hub': 'На хабе',
+  'Back to Hub': 'Назад к хабу',
   'Tasks': 'Задачи',
   'Journal': 'Журнал',
   'Settings': 'Настройки',

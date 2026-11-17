@@ -228,7 +228,7 @@ export default function MainDashboard({ initialScreen = 'home', onReturnHome, re
 
   if (screen === 'home') return <main className="life-main life-main-home">
     <header className="life-main-hero">
-      <div><span className="life-main-hub-name">OS</span><h1 ref={heading} tabIndex={-1}>{language === 'ru' ? 'Добро пожаловать' : 'Welcome'}{displayName?.trim() ? `, ${displayName.trim()}` : ''}!</h1>
+      <div><span className="life-main-hub-name">Hub</span><h1 ref={heading} tabIndex={-1}>{language === 'ru' ? 'Добро пожаловать' : 'Welcome'}{displayName?.trim() ? `, ${displayName.trim()}` : ''}!</h1>
         <p className="life-main-thanks">{language === 'ru' ? 'Спасибо' : 'Thank you'} <Heart size={13} fill="currentColor" aria-hidden="true" /></p>
         <a className="life-main-discord" href="https://discord.gg/y4s67MzZr" target="_blank" rel="noopener noreferrer">
           {language === 'ru' ? 'Вступить в Discord' : 'Join Discord'} <ArrowRight size={15} aria-hidden="true" />
