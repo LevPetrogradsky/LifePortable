@@ -15,10 +15,15 @@
 }
 
 .life-main-guide-page > h1 {
-  margin: 0 0 24px;
+  margin: 0 0 8px;
   font-size: clamp(32px, 4.9vw, 48px);
   line-height: 1.06;
 }
+
+.life-main-guide-intro { margin: 0 0 22px; color: var(--main-muted); line-height: 1.5; }
+.life-main-guide-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.life-main-guide-actions button { min-height: 44px; padding: 9px 16px; border: 1px solid var(--main-line); border-radius: 12px; background: var(--main-surface); color: var(--main-blue-text); font: inherit; font-weight: 700; }
+.life-main-guide-actions button:hover { border-color: var(--main-blue-text); }
 
 .life-main-guide-page .life-main-guide {
   max-width: 680px;

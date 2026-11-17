@@ -30,7 +30,7 @@ import './mobile-navigation.css'
 import { mobileNavigationLayout } from './mobile-navigation'
 import { repositoryUrl, serviceMode, serviceName } from './service-mode'
 
-type View = Exclude<Shortcut, 'focus'> | 'main' | 'ask' | 'settings' | 'storage' | 'focus-history' | 'presets'
+type View = Exclude<Shortcut, 'focus'> | 'main' | 'ask' | 'ai' | 'settings' | 'storage' | 'focus-history' | 'presets'
 const shortcutIcons = { tasks: ClipboardList, journal: BookOpen, focus: Play, flow: MessageCircle }
 const serviceLabels = { tasks: 'LiveTasks', journal: 'LiveJournal', focus: 'LiveTime', flow: '3 questions' }
 const factors: Factor[] = ['Meaningful Goal', 'Personal Control', 'Fast Feedback', 'Other']
@@ -67,7 +67,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   const [reflectionReturnView, setReflectionReturnView] = useState<View>(defaultView)
   const [reflectionNotice, setReflectionNotice] = useState('')
   const [postFocusReflection, setPostFocusReflection] = useState(false)
-  const isHidden = (page: View) => page === 'main' ? !showHome
+  const isHidden = (page: View) => page === 'ai' ? serviceMode !== 'hub' : page === 'main' ? !showHome
     : page === 'flow' ? !postFocusReflection
       : page === 'storage' ? serviceMode !== 'hub'
       : serviceMode !== 'hub' && page === 'journal' && serviceMode !== 'journal' ? true
@@ -833,6 +833,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
           onStart={startFocus}
           onJournal={onHome('journal') ? () => navigate('journal') : undefined}
           onStorage={serviceMode === 'hub' ? openStorage : undefined}
+          onAI={serviceMode === 'hub' ? () => navigate('ai') : undefined}
           onFocusHistory={() => navigate('focus-history')}
           onSettings={() => navigate('settings')}
           onSearch={() => setSearchOpen(true)}
@@ -840,7 +841,24 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
 
         {view === 'ask' && <main className="life-main life-main-guide-page">
           <h1>{t('Guide')}</h1>
+          <p className="life-main-guide-intro">{language === 'ru' ? 'Быстрый путь к нужному разделу и ответы на вопросы о Hub.' : 'Find a section or get a quick answer about Hub.'}</p>
+          <div className="life-main-guide-actions" aria-label={language === 'ru' ? 'Разделы' : 'Sections'}>
+            <button type="button" onClick={() => navigate('tasks')}>{language === 'ru' ? 'Задачи' : 'Tasks'}</button>
+            {showJournal && <button type="button" onClick={() => navigate('journal')}>{language === 'ru' ? 'Журнал' : 'Journal'}</button>}
+            <button type="button" onClick={() => navigate('settings')}>{t('Settings')}</button>
+          </div>
           <AskLiveOS language={language} actions={{
+            tasks: () => navigate('tasks'),
+            journal: showJournal ? () => navigate('journal') : undefined,
+            focus: data.activeSession ? returnToFocus : () => { startFocus() },
+            settings: () => navigate('settings'),
+          }} />
+        </main>}
+
+        {view === 'ai' && <main className="life-main life-main-guide-page">
+          <h1>Live AI</h1>
+          <p className="life-main-guide-intro">{language === 'ru' ? 'Подключите провайдера для ответов о приложении.' : 'Connect a provider for answers about the app.'}</p>
+          <AskLiveOS mode="ai" language={language} actions={{
             tasks: () => navigate('tasks'),
             journal: showJournal ? () => navigate('journal') : undefined,
             focus: data.activeSession ? returnToFocus : () => { startFocus() },

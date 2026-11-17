@@ -355,6 +355,11 @@
   color: #59449b;
 }
 
+.life-main-shortcut-icon.ai {
+  background: #f3e7fb;
+  color: #7843a0;
+}
+
 .life-main-shortcut-icon.future {
   background: var(--main-soft);
   color: var(--main-muted);
