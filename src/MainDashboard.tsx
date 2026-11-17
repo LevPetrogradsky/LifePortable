@@ -32,7 +32,6 @@ interface MainDashboardProps {
   onOpenTask: (taskId: string) => void
   onDeleteTask: (id: string) => boolean
   onStart: (task: Task) => void
-  onStartOpenFocus: () => void
   onJournal?: () => void
   onFocusHistory: () => void
   onSettings: () => void
@@ -86,7 +85,7 @@ function BreakCard({ taskTitle, activeTime, showTime, running, language, onPause
   </section>
 }
 
-export default function MainDashboard({ initialScreen = 'home', hideBack = false, onReturnHome, returnLabel, showTasksShortcut, showFocusShortcut, searchIncludesJournal, repoUrl, tasks, focusTaskTitle, focusRunning = false, pausedActiveTime, showPausedTime = true, displayName, language = 'en', onPauseFocus, onContinueFocus, onReturnToFocus, onFinishPaused, onCancelFocus, onUpdate, onOpenTask, onDeleteTask, onStart, onStartOpenFocus, onJournal, onFocusHistory, onSettings, onSearch }: MainDashboardProps) {
+export default function MainDashboard({ initialScreen = 'home', hideBack = false, onReturnHome, returnLabel, showTasksShortcut, showFocusShortcut, searchIncludesJournal, repoUrl, tasks, focusTaskTitle, focusRunning = false, pausedActiveTime, showPausedTime = true, displayName, language = 'en', onPauseFocus, onContinueFocus, onReturnToFocus, onFinishPaused, onCancelFocus, onUpdate, onOpenTask, onDeleteTask, onStart, onJournal, onFocusHistory, onSettings, onSearch }: MainDashboardProps) {
   const t = (text: string) => translate(language, text)
   const [screen, setScreen] = useState(initialScreen)
   const [filter, setFilter] = useState<TaskList | 'completed'>('today')
@@ -283,18 +282,18 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
       <section className="life-main-services" aria-labelledby="life-main-services-title">
       <h2 id="life-main-services-title">Live Services</h2>
       <nav className="life-main-shortcuts" aria-label="Live Services">
-        {showTasksShortcut && <button type="button" onClick={() => openTasks()}>
+        {showTasksShortcut && <a href="https://livetasks.vercel.app/">
           <span className="life-main-shortcut-icon tasks"><ClipboardList size={21} aria-hidden="true" /></span>
           <strong>LiveTasks</strong>
-        </button>}
-        {onJournal && <button type="button" onClick={onJournal}>
+        </a>}
+        {onJournal && <a href="https://livejournal-lime.vercel.app/">
           <span className="life-main-shortcut-icon journal"><BookOpen size={21} aria-hidden="true" /></span>
           <strong>LiveJournal</strong>
-        </button>}
-        {showFocusShortcut && <button type="button" onClick={breakCard ? onReturnToFocus : onStartOpenFocus}>
+        </a>}
+        {showFocusShortcut && <a href="https://livetime-bay.vercel.app/">
           <span className="life-main-shortcut-icon focus"><Play size={21} aria-hidden="true" /></span>
           <strong>LiveTime</strong>
-        </button>}
+        </a>}
         <a href="https://gymos-preview.vercel.app/" target="_blank" rel="noopener noreferrer"
           aria-label={language === 'ru' ? 'Открыть LiveGym в новой вкладке' : 'Open LiveGym in a new tab'}>
           <span className="life-main-shortcut-icon gym"><Dumbbell size={21} aria-hidden="true" /></span>

@@ -815,7 +815,6 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
           onOpenTask={openTaskHistory}
           onDeleteTask={deleteTask}
           onStart={startFocus}
-          onStartOpenFocus={() => startFocus()}
           onJournal={onHome('journal') ? () => navigate('journal') : undefined}
           onFocusHistory={() => navigate('focus-history')}
           onSettings={() => navigate('settings')}
