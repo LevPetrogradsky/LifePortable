@@ -73,6 +73,7 @@
 .life-main-support {
   display: flex;
   width: fit-content;
+  max-width: 100%;
   align-items: center;
   justify-content: center;
   gap: 7px;
@@ -85,6 +86,13 @@
   text-decoration: none;
   transition: background 150ms ease, border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
 }
+.life-main-today-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+.life-main-today-links > a { margin-top: 0; }
 .life-main-discord {
   margin-top: 12px;
   border: 1px solid #4b72e8;
@@ -299,20 +307,6 @@
 
 .life-main-add-task:hover { border-color: var(--main-blue-text); }
 .life-main-shortcut-icon.add { background: var(--main-soft); color: var(--main-blue-text); }
-
-.life-main-add-task-inline {
-  min-height: 48px;
-  padding: 7px 10px;
-  border-radius: 12px;
-  background: var(--main-soft);
-  color: var(--main-blue-text);
-}
-
-.life-main-add-task-inline .life-main-shortcut-icon.add {
-  width: 32px;
-  height: 32px;
-  background: var(--main-surface);
-}
 
 .life-main-services {
   display: grid;
@@ -942,6 +936,11 @@
 }
 
 @media (max-width: 760px) {
+  .life-main-today-links {
+    display: grid;
+    justify-items: start;
+  }
+
   .main-area:has(> .life-main) > .mobile-header {
     display: none;
   }
