@@ -552,7 +552,7 @@ export default function JournalPage({
           <button type="button" className="journal-icon journal-search-toggle" aria-label={t(returnLabel)} onClick={onReturn}>
             <ArrowLeft size={21} aria-hidden="true" />
           </button>
-          <h1>Life Journal</h1>
+          <h1>LiveJournal</h1>
         </div>
         <button type="button" className="journal-icon journal-search-toggle" aria-label={t('Search journal')}
           aria-haspopup="dialog" onClick={() => setSearchOpen(true)}>
