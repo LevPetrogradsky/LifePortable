@@ -58,7 +58,10 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   const inBar = (id: Shortcut) => serviceMode === 'hub' ? shortcutVisible(data, id, 'bar') : id === serviceMode || (serviceMode === 'time' && id === 'focus')
   const defaultView: View = serviceMode === 'time' ? 'presets' : serviceMode === 'tasks' || serviceMode === 'journal' ? serviceMode : showHome ? 'main' : (['journal', 'tasks'] as const).find(inBar) ?? 'settings'
   const [requestedView, setView] = useState<View>(() => {
-    try { return serviceMode === 'hub' && localStorage.getItem(`${storageKey ?? STORAGE_KEY}.last-view`) === 'journal' ? 'journal' : defaultView }
+    try {
+      if (serviceMode === 'hub' && new URLSearchParams(window.location.search).get('open') === 'ai') return 'ai'
+      return serviceMode === 'hub' && localStorage.getItem(`${storageKey ?? STORAGE_KEY}.last-view`) === 'journal' ? 'journal' : defaultView
+    }
     catch { return defaultView }
   })
   const [homeNavigationKey, setHomeNavigationKey] = useState(0)
@@ -712,7 +715,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
     }
     clearOnboardingPreviewUrl()
     setOnboardingMode(null)
-    navigate('main')
+    navigate(new URLSearchParams(window.location.search).get('open') === 'ai' ? 'ai' : 'main')
     return true
   }
 
@@ -829,7 +832,6 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
           onStart={startFocus}
           onJournal={onHome('journal') ? () => navigate('journal') : undefined}
           onStorage={serviceMode === 'hub' ? openStorage : undefined}
-          onAI={serviceMode === 'hub' ? () => navigate('ai') : undefined}
           onSettings={() => navigate('settings')}
           onSearch={() => setSearchOpen(true)}
         />}

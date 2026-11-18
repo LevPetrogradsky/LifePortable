@@ -34,7 +34,6 @@ interface MainDashboardProps {
   onStart: (task: Task) => void
   onJournal?: () => void
   onStorage?: () => void
-  onAI?: () => void
   onSettings: () => void
   onSearch: () => void
 }
@@ -88,7 +87,7 @@ function BreakCard({ taskTitle, activeTime, showTime, running, language, links, 
   </section>
 }
 
-export default function MainDashboard({ initialScreen = 'home', hideBack = false, onReturnHome, returnLabel, showTasksShortcut, showFocusShortcut, searchIncludesJournal, repoUrl, tasks, focusTaskTitle, focusRunning = false, pausedActiveTime, showPausedTime = true, displayName, language = 'en', onPauseFocus, onContinueFocus, onReturnToFocus, onFinishPaused, onCancelFocus, onUpdate, onOpenTask, onDeleteTask, onStart, onJournal, onStorage, onAI, onSettings, onSearch }: MainDashboardProps) {
+export default function MainDashboard({ initialScreen = 'home', hideBack = false, onReturnHome, returnLabel, showTasksShortcut, showFocusShortcut, searchIncludesJournal, repoUrl, tasks, focusTaskTitle, focusRunning = false, pausedActiveTime, showPausedTime = true, displayName, language = 'en', onPauseFocus, onContinueFocus, onReturnToFocus, onFinishPaused, onCancelFocus, onUpdate, onOpenTask, onDeleteTask, onStart, onJournal, onStorage, onSettings, onSearch }: MainDashboardProps) {
   const t = (text: string) => translate(language, text)
   const [screen, setScreen] = useState(initialScreen)
   const [filter, setFilter] = useState<TaskList | 'completed'>('today')
@@ -295,10 +294,10 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
           <span className="life-main-shortcut-icon storage"><HardDrive size={21} aria-hidden="true" /></span>
           <strong>Live Storage</strong>
         </button>}
-        {onAI && <button type="button" onClick={onAI}>
+        <a href="https://liveai-theta.vercel.app/">
           <span className="life-main-shortcut-icon ai"><Sparkles size={21} aria-hidden="true" /></span>
           <strong>LiveAI</strong>
-        </button>}
+        </a>
         <div className="life-main-service-soon">
           <span className="life-main-shortcut-icon future"><Settings2 size={21} aria-hidden="true" /></span>
           <span className="life-main-service-copy"><strong>LiveManage</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
