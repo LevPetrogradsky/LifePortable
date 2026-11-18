@@ -13,6 +13,7 @@ const themes = [
 ] as const
 
 interface SettingsPageProps {
+  hubOnly?: boolean
   account?: ReactNode
   onOpenStorage?: () => void
   journalSync: JournalCloudControls
@@ -67,7 +68,7 @@ function DisplayNameForm({ name, onSave, language }: { name: string; onSave: (na
 }
 
 export default function SettingsPage({
-  account, onOpenStorage, journalSync, theme, onThemeChange, language, onLanguageChange,
+  hubOnly = false, account, onOpenStorage, journalSync, theme, onThemeChange, language, onLanguageChange,
   showHome, onHomeVisibilityChange, showAskLiveOS, onAskLiveOSVisibilityChange,
   shortcutVisible, onShortcutChange, onExport, onImport, displayName, onDisplayNameChange,
 }: SettingsPageProps) {
@@ -108,7 +109,7 @@ export default function SettingsPage({
         <DisplayNameForm key={displayName} name={displayName} onSave={onDisplayNameChange} language={language} />
       </SettingsGroup>
 
-      <SettingsGroup title={t('Hub & navigation')} icon={<Compass size={18} />}>
+      {!hubOnly && <SettingsGroup title={t('Hub & navigation')} icon={<Compass size={18} />}>
         <label className="settings-page__toggle settings-page__navigation-toggle">
           <span className="settings-page__toggle-copy"><strong>{t('Hub in bottom bar')}</strong></span>
           <input type="checkbox" role="switch" aria-label={t('Hub in navigation bar')} checked={showHome}
@@ -132,9 +133,9 @@ export default function SettingsPage({
             </label>)}
           </fieldset>)}
         </div>
-      </SettingsGroup>
+      </SettingsGroup>}
 
-      <SettingsGroup title={t('Backups')} icon={<HardDrive size={18} />}>
+      {!hubOnly && <SettingsGroup title={t('Backups')} icon={<HardDrive size={18} />}>
         <div className="settings-page__actions">
           <button type="button" className="settings-page__action" onClick={onExport}>
             <Download size={17} aria-hidden="true" />{t('Save a copy')}
@@ -144,7 +145,7 @@ export default function SettingsPage({
             <input type="file" accept="application/json,.json" onChange={onImport} />
           </label>
         </div>
-      </SettingsGroup>
+      </SettingsGroup>}
     </div>
   </main>
 }

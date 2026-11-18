@@ -50,6 +50,7 @@ function ResetPassword({ auth, token, onDone }: { auth: AccountAuth; token: stri
 
 function ConnectedApp({ auth }: { auth: AccountAuth }) {
   const { data, isPending, error, refetch } = auth.useSession()
+  const [continueAsGuest, setContinueAsGuest] = useState(false)
   const user = data?.user
   const [onboardingPreference, setOnboardingPreference] = useState<boolean | null | undefined>()
   const getToken = async () => {
@@ -66,7 +67,13 @@ function ConnectedApp({ auth }: { auth: AccountAuth }) {
   const guestToken = import.meta.env.VITE_JOURNAL_SYNC_ENABLED === 'true'
     ? async () => { const code = readRecoveryCode(); return code ? `Guest ${code}` : null }
     : undefined
-  if (isPending) return <main className="settings-page"><p role="status">Opening LiveOS Portable...</p></main>
+  if (isPending && !continueAsGuest) return <main className="settings-page"><p role="status">Opening LiveHub...</p>
+    <button type="button" className="settings-page__action" onClick={() => setContinueAsGuest(true)}>Continue as guest</button>
+  </main>
+  if (isPending) return <App guestCloud journalCloudToken={guestToken} account={language => <div className="settings-page__account">
+    <p className="settings-page__description">{translate(language, 'Account is still connecting. Guest access is available now.')}</p>
+    <button type="button" className="settings-page__action" onClick={() => { setContinueAsGuest(false); void refetch() }}>{translate(language, 'Try again')}</button>
+  </div>} />
   if (error) return <App journalCloudToken={guestToken} guestCloud account={language => <div className="settings-page__account">
     <p className="settings-page__description" role="alert">{translate(language, 'Could not connect to your account. You can use LiveOS Portable as a guest.')}</p>
     <button type="button" className="settings-page__action" onClick={() => void refetch()}>{translate(language, 'Try again')}</button>

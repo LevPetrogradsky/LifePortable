@@ -8,6 +8,7 @@ import './main-dashboard.css'
 import './home-tips.css'
 
 interface MainDashboardProps {
+  hubOnly?: boolean
   initialScreen?: 'home' | 'tasks'
   hideBack?: boolean
   onReturnHome?: () => void
@@ -86,7 +87,7 @@ function BreakCard({ taskTitle, activeTime, showTime, running, language, links, 
   </section>
 }
 
-export default function MainDashboard({ initialScreen = 'home', hideBack = false, onReturnHome, returnLabel, showTasksShortcut, showFocusShortcut, searchIncludesJournal, repoUrl, tasks, focusTaskTitle, focusRunning = false, pausedActiveTime, showPausedTime = true, displayName, language = 'en', onPauseFocus, onContinueFocus, onReturnToFocus, onFinishPaused, onCancelFocus, onUpdate, onOpenTask, onDeleteTask, onStart, onJournal, onSettings, onSearch }: MainDashboardProps) {
+export default function MainDashboard({ hubOnly = false, initialScreen = 'home', hideBack = false, onReturnHome, returnLabel, showTasksShortcut, showFocusShortcut, searchIncludesJournal, repoUrl, tasks, focusTaskTitle, focusRunning = false, pausedActiveTime, showPausedTime = true, displayName, language = 'en', onPauseFocus, onContinueFocus, onReturnToFocus, onFinishPaused, onCancelFocus, onUpdate, onOpenTask, onDeleteTask, onStart, onJournal, onSettings, onSearch }: MainDashboardProps) {
   const t = (text: string) => translate(language, text)
   const [screen, setScreen] = useState(initialScreen)
   const [filter, setFilter] = useState<TaskList | 'completed'>('today')
@@ -229,7 +230,7 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
       <Heart size={15} aria-hidden="true" /> {language === 'ru' ? 'Поддержать LiveOS' : 'Support LiveOS'}
     </a>
   </nav>
-  const breakCard = focusTaskTitle !== undefined && <BreakCard taskTitle={focusTaskTitle} activeTime={pausedActiveTime ?? '00:00:00'} showTime={showPausedTime} running={focusRunning} language={language} links={hubLinks}
+  const breakCard = !hubOnly && focusTaskTitle !== undefined && <BreakCard taskTitle={focusTaskTitle} activeTime={pausedActiveTime ?? '00:00:00'} showTime={showPausedTime} running={focusRunning} language={language} links={hubLinks}
     onPause={onPauseFocus} onContinue={onContinueFocus} onReturn={onReturnToFocus} onFinish={onFinishPaused} onCancel={onCancelFocus} />
   const addTaskButton = <button type="button" className="life-main-add-task" onClick={() => openTasks(true)}>
     <span className="life-main-shortcut-icon add"><Plus size={21} aria-hidden="true" /></span>
@@ -244,10 +245,10 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
         </div>
       </div>
       <div className="life-main-hero-actions">
-        <span className="home-icon-action">
+        {!hubOnly && <span className="home-icon-action">
           <button type="button" className="life-main-icon life-main-settings" aria-label={t(searchIncludesJournal ? 'Search tasks and journal' : 'Search tasks')}
             aria-haspopup="dialog" onClick={onSearch}><Search size={20} aria-hidden="true" /></button>
-        </span>
+        </span>}
         <span className="home-icon-action">
           <button type="button" className="life-main-icon life-main-settings" aria-label={t('Open settings')} onClick={onSettings}><Settings2 size={20} /></button>
         </span>
@@ -262,7 +263,7 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
         </section>
       </div>}
 
-      {addTaskButton}
+      {!hubOnly && addTaskButton}
 
       <section className="life-main-services" aria-labelledby="life-main-services-title">
       <h2 id="life-main-services-title">Live Services</h2>
