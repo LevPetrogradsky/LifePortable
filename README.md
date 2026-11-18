@@ -4,9 +4,9 @@ LiveHub brings LiveTasks, LiveJournal, and LiveTime together in a small web appl
 
 ## Ownership and permitted use
 
-**Copyright 2026 LevPetrogradsky.** The original LiveOS Portable code and assets are provided under the [PolyForm Noncommercial License 1.0.0](LICENSE.md). You may use, change, and share them for personal or other noncommercial purposes under that license. Commercial use requires separate written permission. Third-party components retain their own licenses. A public repository does not transfer ownership.
+**Copyright 2026 LevPetrogradsky.** The original LiveHub code and assets are provided under the [PolyForm Noncommercial License 1.0.0](LICENSE.md). You may use, change, and share them for personal or other noncommercial purposes under that license. Commercial use requires separate written permission. Third-party components retain their own licenses. A public repository does not transfer ownership.
 
-**Русский:** LiveOS Portable принадлежит правообладателю LevPetrogradsky. Личное и иное некоммерческое использование разрешено на условиях [лицензии](LICENSE.md); коммерческое использование требует отдельного письменного разрешения.
+**Русский:** LiveHub принадлежит правообладателю LevPetrogradsky. Личное и иное некоммерческое использование разрешено на условиях [лицензии](LICENSE.md); коммерческое использование требует отдельного письменного разрешения.
 
 ## Run locally
 
