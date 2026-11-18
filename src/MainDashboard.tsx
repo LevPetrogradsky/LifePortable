@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
-import { ArrowLeft, ArrowRight, BookOpen, BookText, BriefcaseBusiness, CalendarDays, Check, ChevronRight, Circle, ClipboardList, Code2, Dumbbell, Flag, Gamepad2, Github, GripHorizontal, HardDrive, Heart, ListTodo, Maximize2, Pause, Pencil, Play, Plus, Search, Settings2, ShieldCheck, Sparkles, Trash2, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BookOpen, BookText, BriefcaseBusiness, CalendarDays, Check, ChevronRight, Circle, ClipboardList, Code2, Dumbbell, Flag, Gamepad2, Github, GripHorizontal, HardDrive, Heart, Leaf, ListTodo, Maximize2, Pause, Pencil, Play, Plus, Search, Settings2, ShieldCheck, Sparkles, Trash2, X } from 'lucide-react'
 import { taskLists, type LiveOSData, type Task, type TaskList } from './data'
 import { todayTaskLimit } from './task-rules'
 import { translate } from './language'
@@ -317,6 +317,10 @@ export default function MainDashboard({ hubOnly = false, initialScreen = 'home',
         <div className="life-main-service-soon">
           <span className="life-main-shortcut-icon future"><CalendarDays size={21} aria-hidden="true" /></span>
           <span className="life-main-service-copy"><strong>LivePlan</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
+        </div>
+        <div className="life-main-service-soon">
+          <span className="life-main-shortcut-icon future"><Leaf size={21} aria-hidden="true" /></span>
+          <strong>Live OS в разработке</strong>
         </div>
       </nav>
       </section>
