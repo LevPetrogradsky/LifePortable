@@ -33,7 +33,6 @@ interface MainDashboardProps {
   onDeleteTask: (id: string) => boolean
   onStart: (task: Task) => void
   onJournal?: () => void
-  onStorage?: () => void
   onSettings: () => void
   onSearch: () => void
 }
@@ -87,7 +86,7 @@ function BreakCard({ taskTitle, activeTime, showTime, running, language, links, 
   </section>
 }
 
-export default function MainDashboard({ initialScreen = 'home', hideBack = false, onReturnHome, returnLabel, showTasksShortcut, showFocusShortcut, searchIncludesJournal, repoUrl, tasks, focusTaskTitle, focusRunning = false, pausedActiveTime, showPausedTime = true, displayName, language = 'en', onPauseFocus, onContinueFocus, onReturnToFocus, onFinishPaused, onCancelFocus, onUpdate, onOpenTask, onDeleteTask, onStart, onJournal, onStorage, onSettings, onSearch }: MainDashboardProps) {
+export default function MainDashboard({ initialScreen = 'home', hideBack = false, onReturnHome, returnLabel, showTasksShortcut, showFocusShortcut, searchIncludesJournal, repoUrl, tasks, focusTaskTitle, focusRunning = false, pausedActiveTime, showPausedTime = true, displayName, language = 'en', onPauseFocus, onContinueFocus, onReturnToFocus, onFinishPaused, onCancelFocus, onUpdate, onOpenTask, onDeleteTask, onStart, onJournal, onSettings, onSearch }: MainDashboardProps) {
   const t = (text: string) => translate(language, text)
   const [screen, setScreen] = useState(initialScreen)
   const [filter, setFilter] = useState<TaskList | 'completed'>('today')
@@ -290,10 +289,10 @@ export default function MainDashboard({ initialScreen = 'home', hideBack = false
           <span className="life-main-shortcut-icon clients"><BriefcaseBusiness size={21} aria-hidden="true" /></span>
           <strong>LiveClients</strong>
         </a>
-        {onStorage && <button type="button" onClick={onStorage}>
+        <a href="https://livestorage-blue.vercel.app/">
           <span className="life-main-shortcut-icon storage"><HardDrive size={21} aria-hidden="true" /></span>
           <strong>Live Storage</strong>
-        </button>}
+        </a>
         <a href="https://liveai-theta.vercel.app/">
           <span className="life-main-shortcut-icon ai"><Sparkles size={21} aria-hidden="true" /></span>
           <strong>LiveAI</strong>
