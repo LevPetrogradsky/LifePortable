@@ -31,7 +31,7 @@ import { repositoryUrl, serviceMode, serviceName } from './service-mode'
 
 type View = Exclude<Shortcut, 'focus'> | 'main' | 'ask' | 'ai' | 'settings' | 'storage' | 'focus-history' | 'presets'
 const shortcutIcons = { tasks: ClipboardList, journal: BookOpen, focus: Play, flow: MessageCircle }
-const serviceLabels = { tasks: 'LiveTasks', journal: 'LiveJournal', focus: 'LiveTime', flow: '3 questions' }
+const serviceLabels = { tasks: 'LifeTasks', journal: 'LifeJournal', focus: 'LifeTime', flow: '3 questions' }
 const factors: Factor[] = ['Meaningful Goal', 'Personal Control', 'Fast Feedback', 'Other']
 const repoUrl = repositoryUrl
 
@@ -764,7 +764,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   if (serviceMode !== 'hub' && data.pendingSession) return (<>
     <main className="checkin-screen page-container">
       {storageError && <div className="storage-error" role="alert">{t('Your browser could not save the check-in. Your answers are still here. Check available storage and try again.')}</div>}
-      <div className="focus-top"><div className="brand-mark"><Leaf size={18} strokeWidth={2.3} /></div><span>{t('LiveOS Portable / Check-in')}</span></div>
+      <div className="focus-top"><div className="brand-mark"><Leaf size={18} strokeWidth={2.3} /></div><span>{t('LifePortable / Check-in')}</span></div>
       <div className="checkin-card">
         <div className="section-icon"><Sparkles size={20} /></div>
         <p className="eyebrow">{t('A MOMENT TO REFLECT')}</p>
@@ -842,17 +842,17 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
         {view === 'ask' && <main className="life-main life-main-guide-page">
           <h1>{t('Guide')}</h1>
           <p className="life-main-guide-intro">{language === 'ru'
-            ? 'LiveHub помогает перейти к нужному сервису. На главной странице выберите LiveTasks, LiveJournal или LiveTime; работа с ними происходит в отдельных сервисах.'
-            : 'LiveHub helps you find a service. Choose LiveTasks, LiveJournal, or LiveTime on the home page; each service has its own workspace.'}</p>
+            ? 'LifePortable помогает перейти к нужному сервису. На главной странице выберите LifeTasks, LifeJournal или LifeTime; работа с ними происходит в отдельных сервисах.'
+            : 'LifePortable helps you find a service. Choose LifeTasks, LifeJournal, or LifeTime on the home page; each service has its own workspace.'}</p>
           <p className="life-main-guide-intro">{language === 'ru'
-            ? 'Аккаунт и доступное облачное сохранение находятся в Live Storage. Настройки Hub меняют только внешний вид и язык этой страницы.'
-            : 'Account access and available cloud saving are in Live Storage. Hub settings control this page’s appearance and language.'}</p>
+            ? 'Аккаунт и доступное облачное сохранение находятся в LifeStorage. Настройки Hub меняют только внешний вид и язык этой страницы.'
+            : 'Account access and available cloud saving are in LifeStorage. Hub settings control this page’s appearance and language.'}</p>
         </main>}
 
         {view === 'ai' && <main className="life-main life-main-guide-page">
-          <h1>LiveAI</h1>
-          <p className="life-main-guide-intro">{language === 'ru' ? 'Отдельная публичная страница LiveAI открыта. Генерация ответов пока не доступна.' : 'The separate public LiveAI page is open. Answer generation is not available yet.'}</p>
-          <a href="https://liveai-theta.vercel.app/">{language === 'ru' ? 'Открыть LiveAI' : 'Open LiveAI'}</a>
+          <h1>LifeAI</h1>
+          <p className="life-main-guide-intro">{language === 'ru' ? 'Отдельная публичная страница LifeAI открыта. Генерация ответов пока не доступна.' : 'The separate public LifeAI page is open. Answer generation is not available yet.'}</p>
+          <a href="https://liveai-theta.vercel.app/">{language === 'ru' ? 'Открыть LifeAI' : 'Open LifeAI'}</a>
         </main>}
 
         {view === 'presets' && <FocusPresets

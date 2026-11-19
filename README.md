@@ -1,12 +1,12 @@
-# LiveHub
+# LifePortable
 
-LiveHub brings LiveTasks, LiveJournal, and LiveTime together in a small web application. Its Hub also links to the growing family of Live services. This repository starts from the web preview source at commit `375dbdfb7fb25d56104873fb00eafa37c2aba5d6`.
+LifePortable is the web hub for LifeTasks, LifeJournal, LifeTime, and the growing family of Life services. The services open at their existing addresses; the Hub does not share browser state across domains. The public demo remains at https://lifeos-demo-kappa.vercel.app/. This repository starts from the web preview source at commit `375dbdfb7fb25d56104873fb00eafa37c2aba5d6`.
 
 ## Ownership and permitted use
 
-**Copyright 2026 LevPetrogradsky.** The original LiveHub code and assets are provided under the [PolyForm Noncommercial License 1.0.0](LICENSE.md). You may use, change, and share them for personal or other noncommercial purposes under that license. Commercial use requires separate written permission. Third-party components retain their own licenses. A public repository does not transfer ownership.
+**Copyright 2026 LevPetrogradsky.** The original LifePortable code and assets are provided under the [PolyForm Noncommercial License 1.0.0](LICENSE.md). You may use, change, and share them for personal or other noncommercial purposes under that license. Commercial use requires separate written permission. Third-party components retain their own licenses. A public repository does not transfer ownership.
 
-**Русский:** LiveHub принадлежит правообладателю LevPetrogradsky. Личное и иное некоммерческое использование разрешено на условиях [лицензии](LICENSE.md); коммерческое использование требует отдельного письменного разрешения.
+**Русский:** LifePortable принадлежит правообладателю LevPetrogradsky. Личное и иное некоммерческое использование разрешено на условиях [лицензии](LICENSE.md); коммерческое использование требует отдельного письменного разрешения.
 
 ## Run locally
 

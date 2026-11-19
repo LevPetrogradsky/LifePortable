@@ -44,7 +44,7 @@ function ResetPassword({ auth, token, onDone }: { auth: AccountAuth; token: stri
       <button type="submit" className="settings-page__action" disabled={busy}>Save new password</button>
     </form>}
     {(message || !token) && <p role="status">{message || 'This reset link is invalid or has expired.'}</p>}
-    <button type="button" className="settings-page__action" disabled={busy} onClick={onDone}>Back to LiveOS Portable</button>
+    <button type="button" className="settings-page__action" disabled={busy} onClick={onDone}>Back to LifePortable</button>
   </main>
 }
 
@@ -67,7 +67,7 @@ function ConnectedApp({ auth }: { auth: AccountAuth }) {
   const guestToken = import.meta.env.VITE_JOURNAL_SYNC_ENABLED === 'true'
     ? async () => { const code = readRecoveryCode(); return code ? `Guest ${code}` : null }
     : undefined
-  if (isPending && !continueAsGuest) return <main className="settings-page"><p role="status">Opening LiveHub...</p>
+  if (isPending && !continueAsGuest) return <main className="settings-page"><p role="status">Opening LifePortable...</p>
     <button type="button" className="settings-page__action" onClick={() => setContinueAsGuest(true)}>Continue as guest</button>
   </main>
   if (isPending) return <App guestCloud journalCloudToken={guestToken} account={language => <div className="settings-page__account">
@@ -75,11 +75,11 @@ function ConnectedApp({ auth }: { auth: AccountAuth }) {
     <button type="button" className="settings-page__action" onClick={() => { setContinueAsGuest(false); void refetch() }}>{translate(language, 'Try again')}</button>
   </div>} />
   if (error) return <App journalCloudToken={guestToken} guestCloud account={language => <div className="settings-page__account">
-    <p className="settings-page__description" role="alert">{translate(language, 'Could not connect to your account. You can use LiveOS Portable as a guest.')}</p>
+    <p className="settings-page__description" role="alert">{translate(language, 'Could not connect to your account. You can use LifePortable as a guest.')}</p>
     <button type="button" className="settings-page__action" onClick={() => void refetch()}>{translate(language, 'Try again')}</button>
   </div>} existingAccount />
 
-  if (user && onboardingPreference === undefined) return <main className="settings-page"><p role="status">Opening LiveHub...</p></main>
+  if (user && onboardingPreference === undefined) return <main className="settings-page"><p role="status">Opening LifePortable...</p></main>
   const storageKey = user ? `${STORAGE_KEY}.neon.${user.id}` : undefined
   return <App key={storageKey ?? STORAGE_KEY} storageKey={storageKey} existingAccount={Boolean(user)}
     accountOnboardingPreference={user ? onboardingPreference : undefined}

@@ -130,7 +130,7 @@ export default function AskLiveOS({ actions, language = 'en', mode = 'guide' }: 
     <div className="life-main-guide-heading">
       <span className="life-main-guide-icon"><MessageCircle size={20} aria-hidden="true" /></span>
       <div>
-        <h2 id="life-main-guide-title">{mode === 'ai' ? 'LiveAI' : language === 'ru' ? 'Спросить Guide' : 'Ask Guide'}</h2>
+        <h2 id="life-main-guide-title">{mode === 'ai' ? 'LifeAI' : language === 'ru' ? 'Спросить Guide' : 'Ask Guide'}</h2>
         <p>{mode === 'ai' ? (language === 'ru' ? 'Ответы через подключённого провайдера.' : 'Answers from a connected provider.') : (language === 'ru' ? 'Короткие подсказки по приложению.' : 'Quick help with the app.')}</p>
       </div>
       {mode === 'ai' && <button type="button" className="life-main-ai-toggle" aria-expanded={settingsOpen} onClick={() => setSettingsOpen(open => !open)}>
@@ -138,7 +138,7 @@ export default function AskLiveOS({ actions, language = 'en', mode = 'guide' }: 
       </button>}
     </div>
 
-    {mode === 'ai' && settingsOpen && <div className="life-main-ai-settings" aria-label={language === 'ru' ? 'Настройки LiveAI' : 'LiveAI settings'}>
+    {mode === 'ai' && settingsOpen && <div className="life-main-ai-settings" aria-label={language === 'ru' ? 'Настройки LifeAI' : 'LifeAI settings'}>
       <div className="life-main-ai-settings-title"><Sparkles size={18} aria-hidden="true" /><strong>{language === 'ru' ? 'Облачные ответы' : 'Cloud answers'}</strong></div>
       <p>{language === 'ru' ? 'Локальные подсказки работают без ключа. Выберите провайдера и подключите его только по желанию.' : 'Local tips work without a key. Connect a provider only if you want cloud answers.'}</p>
       <fieldset className="life-main-ai-providers" disabled={checking || asking}>
@@ -165,7 +165,7 @@ export default function AskLiveOS({ actions, language = 'en', mode = 'guide' }: 
     {cloudEnabled && <p className="life-main-ai-active" role="status"><Sparkles size={15} aria-hidden="true" /> {language === 'ru' ? `Ответы ${providerNames[provider]} включены` : `${providerNames[provider]} answers enabled`}</p>}
     {notice && <p className="life-main-ai-result temporary_failure" role="status">{notice}</p>}
     {exchanges.length > 0 && <div className="life-main-guide-conversation">
-      <div ref={messages} className="life-main-guide-messages" role="log" aria-label="LiveHub help answers" aria-live="polite">
+      <div ref={messages} className="life-main-guide-messages" role="log" aria-label="LifePortable help answers" aria-live="polite">
         {exchanges.map((exchange, index) => <div className="life-main-guide-exchange" key={index}>
           <p className="life-main-guide-question">{exchange.question}</p>
           <div className="life-main-guide-reply">
@@ -185,10 +185,10 @@ export default function AskLiveOS({ actions, language = 'en', mode = 'guide' }: 
       <div>{prompts.map(prompt => <button type="button" key={prompt} disabled={asking} onClick={() => void ask(prompt)}>{prompt}<ArrowRight size={15} aria-hidden="true" /></button>)}</div>
     </div>
     <form className="life-main-guide-form" onSubmit={submit}>
-      <label className="journal-sr-only" htmlFor="life-main-guide-question">{language === 'ru' ? 'Вопрос о LiveHub' : 'Ask about LiveHub'}</label>
-      <input id="life-main-guide-question" value={question} maxLength={160} placeholder={language === 'ru' ? 'Спросите о LiveHub…' : 'Ask about LiveHub…'}
+      <label className="journal-sr-only" htmlFor="life-main-guide-question">{language === 'ru' ? 'Вопрос о LifePortable' : 'Ask about LifePortable'}</label>
+      <input id="life-main-guide-question" value={question} maxLength={160} placeholder={language === 'ru' ? 'Спросите о LifePortable…' : 'Ask about LifePortable…'}
         onChange={event => setQuestion(event.target.value)} />
-      <button type="submit" aria-label={language === 'ru' ? 'Спросить LiveHub' : 'Ask LiveHub'} disabled={!question.trim() || asking}><ArrowRight size={18} aria-hidden="true" /></button>
+      <button type="submit" aria-label={language === 'ru' ? 'Спросить LifePortable' : 'Ask LifePortable'} disabled={!question.trim() || asking}><ArrowRight size={18} aria-hidden="true" /></button>
     </form>
     <p className="life-main-guide-disclaimer">{asking ? (language === 'ru' ? 'Ожидаем ответ…' : 'Waiting for an answer…') : cloudEnabled ? (language === 'ru' ? 'Подключённый провайдер · только этот диалог' : 'Connected provider · this conversation only') : (language === 'ru' ? 'Локальные подсказки · без аккаунта' : 'Local guide · no account needed')}</p>
   </section>

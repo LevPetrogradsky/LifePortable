@@ -5,7 +5,7 @@ import { translate, type AppLanguage } from '../language'
 import JournalCloudPanel, { type JournalCloudControls } from './JournalCloudPanel'
 import './settings.css'
 
-const shortcutNames = { tasks: 'LiveTasks', journal: 'LiveJournal', focus: 'LiveTime', flow: '3 questions' }
+const shortcutNames = { tasks: 'LifeTasks', journal: 'LifeJournal', focus: 'LifeTime', flow: '3 questions' }
 const themes = [
   { value: 'light', label: 'Light', Icon: Sun },
   { value: 'dark', label: 'Dark', Icon: Moon },
@@ -86,22 +86,22 @@ export default function SettingsPage({
   return <main className="settings-page settings-page--hub" aria-labelledby="settings-page-title">
     <h1 id="settings-page-title">{t('Settings')}</h1>
     <div className="settings-page__hub-link">
-      <strong>{language === 'ru' ? 'Ссылка на LiveHub' : 'LiveHub link'}</strong>
+      <strong>{language === 'ru' ? 'Ссылка на LifePortable' : 'LifePortable link'}</strong>
       <div className="settings-page__hub-link-controls">
         <a className="settings-page__hub-link-url" href={hubUrl} target="_blank" rel="noopener noreferrer">
           {hubUrl}<ExternalLink size={15} aria-hidden="true" />
         </a>
-        <button type="button" onClick={() => void copyHubLink()} aria-label={language === 'ru' ? 'Скопировать ссылку на LiveHub' : 'Copy LiveHub link'}>
+        <button type="button" onClick={() => void copyHubLink()} aria-label={language === 'ru' ? 'Скопировать ссылку на LifePortable' : 'Copy LifePortable link'}>
           <Copy size={17} aria-hidden="true" />{language === 'ru' ? 'Копировать' : 'Copy'}
         </button>
       </div>
       {copyStatus && <span role="status" className="settings-page__hub-link-status">{copyStatus}</span>}
     </div>
     <div className="settings-page__groups">
-      <SettingsGroup title={onOpenStorage ? 'Live Storage' : 'Live Account'} icon={<UserRound size={18} />}>
+      <SettingsGroup title={onOpenStorage ? 'LifeStorage' : 'Life Account'} icon={<UserRound size={18} />}>
         {onOpenStorage ? <>
-          <p className="settings-page__description">{language === 'ru' ? 'Аккаунт и сохранение данных находятся в Live Storage.' : 'Your account and saved data are in Live Storage.'}</p>
-          <button type="button" className="settings-page__action" onClick={onOpenStorage}>{language === 'ru' ? 'Открыть Live Storage' : 'Open Live Storage'}</button>
+          <p className="settings-page__description">{language === 'ru' ? 'Аккаунт и сохранение данных находятся в LifeStorage.' : 'Your account and saved data are in LifeStorage.'}</p>
+          <button type="button" className="settings-page__action" onClick={onOpenStorage}>{language === 'ru' ? 'Открыть LifeStorage' : 'Open LifeStorage'}</button>
         </> : <>
           {account}
           <JournalCloudPanel cloud={journalSync} language={language} onSaveCopy={onExport} />

@@ -48,7 +48,7 @@ export default function AccountPanel({ auth, user, refreshSession, language, ini
         setNotice('If an account exists, check your email for a reset link.')
       } else if (mode === 'sign-up') {
         try {
-          const result = await auth.signUp.email({ email: address, password, name: 'LiveOS Portable member' })
+          const result = await auth.signUp.email({ email: address, password, name: 'LifePortable member' })
           if (result.error) throw result.error
         } catch {
           throw new Error('Could not create the account. Try signing in if you already registered.')
@@ -78,7 +78,7 @@ export default function AccountPanel({ auth, user, refreshSession, language, ini
         changeMode('sign-in')
       })}>{t('Sign out')}</button>
     </> : <form className="settings-page__account" onSubmit={submit}>
-      {mode !== 'reset' && <div className="settings-page__account-modes" aria-label="Live Account">
+      {mode !== 'reset' && <div className="settings-page__account-modes" aria-label="Life Account">
         <button type="button" aria-pressed={mode === 'sign-in'} disabled={busy} onClick={() => changeMode('sign-in')}>{t('Sign in')}</button>
         <button type="button" aria-pressed={mode === 'sign-up'} disabled={busy} onClick={() => changeMode('sign-up')}>{t('Create account')}</button>
       </div>}

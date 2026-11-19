@@ -227,7 +227,7 @@ export default function MainDashboard({ hubOnly = false, initialScreen = 'home',
       <Github size={15} aria-hidden="true" /> {t('View on GitHub')}
     </a>
     <a className="life-main-support" href="https://ko-fi.com/lifeosapp" target="_blank" rel="noopener noreferrer">
-      <Heart size={15} aria-hidden="true" /> {language === 'ru' ? 'Поддержать LiveOS' : 'Support LiveOS'}
+      <Heart size={15} aria-hidden="true" /> {language === 'ru' ? 'Поддержать LifePortable' : 'Support LifePortable'}
     </a>
   </nav>
   const breakCard = !hubOnly && focusTaskTitle !== undefined && <BreakCard taskTitle={focusTaskTitle} activeTime={pausedActiveTime ?? '00:00:00'} showTime={showPausedTime} running={focusRunning} language={language} links={hubLinks}
@@ -266,56 +266,56 @@ export default function MainDashboard({ hubOnly = false, initialScreen = 'home',
       {!hubOnly && addTaskButton}
 
       <section className="life-main-services" aria-labelledby="life-main-services-title">
-      <h2 id="life-main-services-title">Live Services</h2>
-      <nav className="life-main-shortcuts" aria-label="Live Services">
+      <h2 id="life-main-services-title">Life Services</h2>
+      <nav className="life-main-shortcuts" aria-label="Life Services">
         {showTasksShortcut && <a href="https://livetasks.vercel.app/">
           <span className="life-main-shortcut-icon tasks"><ClipboardList size={21} aria-hidden="true" /></span>
-          <strong>LiveTasks</strong>
+          <strong>LifeTasks</strong>
         </a>}
         {onJournal && <a href="https://livejournal-lime.vercel.app/">
           <span className="life-main-shortcut-icon journal"><BookOpen size={21} aria-hidden="true" /></span>
-          <strong>LiveJournal</strong>
+          <strong>LifeJournal</strong>
         </a>}
         {showFocusShortcut && <a href="https://livetime-bay.vercel.app/">
           <span className="life-main-shortcut-icon focus"><Play size={21} aria-hidden="true" /></span>
-          <strong>LiveTime</strong>
+          <strong>LifeTime</strong>
         </a>}
         <a href="https://gymos-preview.vercel.app/" target="_blank" rel="noopener noreferrer"
-          aria-label={language === 'ru' ? 'Открыть LiveGym в новой вкладке' : 'Open LiveGym in a new tab'}>
+          aria-label={language === 'ru' ? 'Открыть LifeGym в новой вкладке' : 'Open LifeGym in a new tab'}>
           <span className="life-main-shortcut-icon gym"><Dumbbell size={21} aria-hidden="true" /></span>
-          <strong>LiveGym</strong>
+          <strong>LifeGym</strong>
         </a>
         <a href="https://livestorage-blue.vercel.app/">
           <span className="life-main-shortcut-icon storage"><HardDrive size={21} aria-hidden="true" /></span>
-          <strong>Live Storage</strong>
+          <strong>LifeStorage</strong>
         </a>
         <a href="https://liveai-theta.vercel.app/">
           <span className="life-main-shortcut-icon ai"><Sparkles size={21} aria-hidden="true" /></span>
-          <strong>LiveAI</strong>
+          <strong>LifeAI</strong>
         </a>
         <div className="life-main-service-soon">
           <span className="life-main-shortcut-icon future"><Settings2 size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LiveManage</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
+          <span className="life-main-service-copy"><strong>LifeManage</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
         </div>
         <div className="life-main-service-soon">
           <span className="life-main-shortcut-icon future"><BookText size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LiveBible</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
+          <span className="life-main-service-copy"><strong>LifeBible</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
         </div>
         <div className="life-main-service-soon">
           <span className="life-main-shortcut-icon future"><Code2 size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LiveCode</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
+          <span className="life-main-service-copy"><strong>LifeCode</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
         </div>
         <div className="life-main-service-soon">
           <span className="life-main-shortcut-icon future"><ShieldCheck size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LiveSecure</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
+          <span className="life-main-service-copy"><strong>LifeSecure</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
         </div>
         <div className="life-main-service-soon">
           <span className="life-main-shortcut-icon future"><CalendarDays size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LivePlan</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
+          <span className="life-main-service-copy"><strong>LifePlan</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
         </div>
         <div className="life-main-service-soon">
           <span className="life-main-shortcut-icon future"><Leaf size={21} aria-hidden="true" /></span>
-          <strong>Live OS в разработке</strong>
+          <strong>Life OS в разработке</strong>
         </div>
       </nav>
       </section>
@@ -333,7 +333,7 @@ export default function MainDashboard({ hubOnly = false, initialScreen = 'home',
         if (onReturnHome) onReturnHome()
         else { setScreen('home'); showList('today') }
       }}><ArrowLeft size={21} /></button>}
-      <h1 ref={heading} tabIndex={-1}>LiveTasks</h1>
+      <h1 ref={heading} tabIndex={-1}>LifeTasks</h1>
       <button type="button" className="life-main-icon" aria-label={t('Add task')} aria-haspopup="dialog" disabled={!canAdd} onClick={() => addTo(addList)}><Plus size={23} /></button>
     </header>
 

@@ -42,21 +42,21 @@ export default function OnePageOnboarding({ mode, displayName, account, language
     finally { setBusy(false) }
   }
 
-  return <div className="lifeos-onboarding" role="dialog" aria-modal="true" aria-label={ru ? 'Добро пожаловать в LiveHub' : 'Welcome to LiveHub'}
+  return <div className="lifeos-onboarding" role="dialog" aria-modal="true" aria-label={ru ? 'Добро пожаловать в LifePortable' : 'Welcome to LifePortable'}
     style={{ height: viewport.height ? `${viewport.height}px` : '100dvh', top: viewport.top }}>
     <div className="lifeos-onboarding__header">
       {accountMode ? <button type="button" className="lifeos-onboarding__back" onClick={() => setAccountMode(undefined)}><ArrowLeft size={17} aria-hidden="true" />{ru ? 'Назад' : 'Back'}</button> : <span />}
       {mode === 'preview' && <button type="button" className="lifeos-onboarding__close" aria-label={ru ? 'Закрыть просмотр' : 'Close onboarding preview'} onClick={onClose}><X size={20} aria-hidden="true" /></button>}
     </div>
     <main className="lifeos-onboarding__content lifeos-onboarding__one-page">
-      <p className="lifeos-onboarding__eyebrow">LiveHub</p>
-      <h1>{accountMode ? (ru ? 'Аккаунт' : 'Account') : (ru ? 'Добро пожаловать в LiveHub' : 'Welcome to LiveHub')}</h1>
+      <p className="lifeos-onboarding__eyebrow">LifePortable</p>
+      <h1>{accountMode ? (ru ? 'Аккаунт' : 'Account') : (ru ? 'Добро пожаловать в LifePortable' : 'Welcome to LifePortable')}</h1>
       {accountMode ? <div className="lifeos-onboarding__account">{account?.(accountMode)}</div> : <>
         <p className="lifeos-onboarding__description">{ru ? 'Все сервисы — в одном месте. Начните с любого раздела.' : 'Your services in one place. Start wherever you like.'}</p>
         <div className="lifeos-onboarding__items">
-          <div className="lifeos-onboarding__feature"><span className="lifeos-onboarding__icon"><ClipboardList size={22} aria-hidden="true" /></span><span><strong>LiveTasks</strong><small>{ru ? 'Планы и дела' : 'Plans and tasks'}</small></span></div>
-          <div className="lifeos-onboarding__feature"><span className="lifeos-onboarding__icon"><BookOpen size={22} aria-hidden="true" /></span><span><strong>LiveJournal</strong><small>{ru ? 'Записи и мысли' : 'Notes and thoughts'}</small></span></div>
-          <div className="lifeos-onboarding__feature"><span className="lifeos-onboarding__icon"><HardDrive size={22} aria-hidden="true" /></span><span><strong>Live Storage</strong><small>{ru ? 'Аккаунт и хранение Journal' : 'Account and Journal storage'}</small></span></div>
+          <div className="lifeos-onboarding__feature"><span className="lifeos-onboarding__icon"><ClipboardList size={22} aria-hidden="true" /></span><span><strong>LifeTasks</strong><small>{ru ? 'Планы и дела' : 'Plans and tasks'}</small></span></div>
+          <div className="lifeos-onboarding__feature"><span className="lifeos-onboarding__icon"><BookOpen size={22} aria-hidden="true" /></span><span><strong>LifeJournal</strong><small>{ru ? 'Записи и мысли' : 'Notes and thoughts'}</small></span></div>
+          <div className="lifeos-onboarding__feature"><span className="lifeos-onboarding__icon"><HardDrive size={22} aria-hidden="true" /></span><span><strong>LifeStorage</strong><small>{ru ? 'Аккаунт и хранение Journal' : 'Account and Journal storage'}</small></span></div>
         </div>
         {account && <div className="lifeos-onboarding__account-options">
           <button type="button" onClick={() => setAccountMode('sign-up')}>{ru ? 'Создать аккаунт' : 'Create account'}</button>
@@ -73,7 +73,7 @@ export default function OnePageOnboarding({ mode, displayName, account, language
     </main>
     {!accountMode && <div className="lifeos-onboarding__footer">
       {error && <p role="alert" className="lifeos-onboarding__error">{ru ? 'Не удалось сохранить выбор. Попробуйте ещё раз.' : 'Could not save your choice. Please try again.'}</p>}
-      <button type="button" className="lifeos-onboarding__primary" disabled={busy} onClick={() => void finish(name)}>{ru ? 'Открыть LiveHub' : 'Open LiveHub'}</button>
+      <button type="button" className="lifeos-onboarding__primary" disabled={busy} onClick={() => void finish(name)}>{ru ? 'Открыть LifePortable' : 'Open LifePortable'}</button>
       {!accountPreferenceAvailable && <button type="button" className="lifeos-onboarding__skip" disabled={busy} onClick={() => void finish('')}>{ru ? 'Пропустить знакомство здесь' : 'Skip intro on this site'}</button>}
     </div>}
   </div>
