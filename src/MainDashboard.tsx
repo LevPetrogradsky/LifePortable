@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
-import { ArrowLeft, ArrowRight, BookOpen, BookText, BriefcaseBusiness, CalendarDays, Check, ChevronRight, Circle, ClipboardList, Code2, Dumbbell, Flag, Gamepad2, Github, GripHorizontal, HardDrive, Heart, Leaf, ListTodo, Maximize2, Pause, Pencil, Play, Plus, Search, Settings2, ShieldCheck, Sparkles, Trash2, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BookOpen, BookText, CalendarDays, Check, ChevronRight, Circle, ClipboardList, Code2, Dumbbell, Flag, Gamepad2, Github, GripHorizontal, HardDrive, Heart, Leaf, ListTodo, Maximize2, Pause, Pencil, Play, Plus, Search, Settings2, ShieldCheck, Sparkles, Trash2, X } from 'lucide-react'
 import { taskLists, type LiveOSData, type Task, type TaskList } from './data'
 import { todayTaskLimit } from './task-rules'
 import { translate } from './language'
@@ -284,11 +284,6 @@ export default function MainDashboard({ hubOnly = false, initialScreen = 'home',
           aria-label={language === 'ru' ? 'Открыть LiveGym в новой вкладке' : 'Open LiveGym in a new tab'}>
           <span className="life-main-shortcut-icon gym"><Dumbbell size={21} aria-hidden="true" /></span>
           <strong>LiveGym</strong>
-        </a>
-        <a href="https://clients-manager-dad-demo.vercel.app/login" target="_blank" rel="noopener noreferrer"
-          aria-label={language === 'ru' ? 'Открыть страницу входа LiveClients в новой вкладке' : 'Open LiveClients sign-in in a new tab'}>
-          <span className="life-main-shortcut-icon clients"><BriefcaseBusiness size={21} aria-hidden="true" /></span>
-          <strong>LiveClients</strong>
         </a>
         <a href="https://livestorage-blue.vercel.app/">
           <span className="life-main-shortcut-icon storage"><HardDrive size={21} aria-hidden="true" /></span>
