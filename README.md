@@ -25,6 +25,6 @@ The app can keep data in the browser. Journal cloud sync and account sign-in req
 
 Some internal identifiers still use `lifeos` so existing browser data and backups remain readable after the visible rename. The existing Ko-fi address also retains its original handle.
 
-The three service repositories initially share this app's data model and support code. Each opens its own service first. Browser storage remains tied to each site's origin; use Settings → Export and Import to move a backup between sites. The existing `lifeos.v1` key and backup formats are retained for compatibility.
+The linked services open at their own domains, and browser storage remains tied to each site's origin. The existing `lifeos.v1` key and backup formats are retained for compatibility; no data is moved as part of this rename.
 
 This repository contains source code, not personal journal entries or production credentials. The existing Vercel preview is a separate deployment and is not automatically connected to this repository.
