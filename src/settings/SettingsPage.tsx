@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent, type ReactNode } from 'react'
-import { ChevronRight, Compass, Download, HardDrive, Monitor, Moon, Palette, Sun, Upload, UserRound } from 'lucide-react'
+import { ChevronRight, Compass, Copy, Download, ExternalLink, HardDrive, Monitor, Moon, Palette, Sun, Upload, UserRound } from 'lucide-react'
 import { maxDisplayNameLength, visibleShortcuts, type Shortcut, type ShortcutLocation, type Theme } from '../data'
 import { translate, type AppLanguage } from '../language'
 import JournalCloudPanel, { type JournalCloudControls } from './JournalCloudPanel'
@@ -11,6 +11,7 @@ const themes = [
   { value: 'dark', label: 'Dark', Icon: Moon },
   { value: 'system', label: 'System', Icon: Monitor },
 ] as const
+const hubUrl = 'https://lifeos-demo-kappa.vercel.app/'
 
 interface SettingsPageProps {
   hubOnly?: boolean
@@ -73,8 +74,29 @@ export default function SettingsPage({
   shortcutVisible, onShortcutChange, onExport, onImport, displayName, onDisplayNameChange,
 }: SettingsPageProps) {
   const t = (text: string) => translate(language, text)
+  const [copyStatus, setCopyStatus] = useState('')
+  const copyHubLink = async () => {
+    try {
+      await navigator.clipboard.writeText(hubUrl)
+      setCopyStatus(language === 'ru' ? 'Ссылка скопирована.' : 'Link copied.')
+    } catch {
+      setCopyStatus(language === 'ru' ? 'Выделите и скопируйте адрес.' : 'Select and copy the address.')
+    }
+  }
   return <main className="settings-page settings-page--hub" aria-labelledby="settings-page-title">
     <h1 id="settings-page-title">{t('Settings')}</h1>
+    <div className="settings-page__hub-link">
+      <strong>{language === 'ru' ? 'Ссылка на LiveHub' : 'LiveHub link'}</strong>
+      <div className="settings-page__hub-link-controls">
+        <a className="settings-page__hub-link-url" href={hubUrl} target="_blank" rel="noopener noreferrer">
+          {hubUrl}<ExternalLink size={15} aria-hidden="true" />
+        </a>
+        <button type="button" onClick={() => void copyHubLink()} aria-label={language === 'ru' ? 'Скопировать ссылку на LiveHub' : 'Copy LiveHub link'}>
+          <Copy size={17} aria-hidden="true" />{language === 'ru' ? 'Копировать' : 'Copy'}
+        </button>
+      </div>
+      {copyStatus && <span role="status" className="settings-page__hub-link-status">{copyStatus}</span>}
+    </div>
     <div className="settings-page__groups">
       <SettingsGroup title={onOpenStorage ? 'Live Storage' : 'Live Account'} icon={<UserRound size={18} />}>
         {onOpenStorage ? <>
