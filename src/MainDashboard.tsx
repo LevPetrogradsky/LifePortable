@@ -285,14 +285,7 @@ export default function MainDashboard({ hubOnly = false, initialScreen = 'home',
           <span className="life-main-shortcut-icon gym"><Dumbbell size={21} aria-hidden="true" /></span>
           <strong>LifeGym</strong>
         </a>
-        <p className="life-main-storage-status">LifeStorage · Coming Soon</p>
       </nav>
-      </section>
-      <section className="life-main-shortcuts life-main-guide-preview" aria-label="Guide">
-        <div className="life-main-service-soon">
-          <span className="life-main-shortcut-icon future"><BookOpen size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>Guide</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
-        </div>
       </section>
     </div>
   </main>
