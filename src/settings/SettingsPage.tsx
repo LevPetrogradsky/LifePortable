@@ -3,6 +3,7 @@ import { ChevronRight, Compass, Copy, Download, ExternalLink, HardDrive, Monitor
 import { maxDisplayNameLength, visibleShortcuts, type Shortcut, type ShortcutLocation, type Theme } from '../data'
 import { translate, type AppLanguage } from '../language'
 import JournalCloudPanel, { type JournalCloudControls } from './JournalCloudPanel'
+import { repositoryUrl } from '../service-mode'
 import './settings.css'
 
 const shortcutNames = { tasks: 'LifeTasks', journal: 'LifeJournal', focus: 'LifeTime', flow: '3 questions' }
@@ -97,6 +98,7 @@ export default function SettingsPage({
       </div>
       {copyStatus && <span role="status" className="settings-page__hub-link-status">{copyStatus}</span>}
     </div>
+    {hubOnly && <p><a className="settings-page__action" href={repositoryUrl} target="_blank" rel="noopener noreferrer">{t('View on GitHub')}</a></p>}
     <div className="settings-page__groups">
       {!hubOnly && <SettingsGroup title={onOpenStorage ? 'LifeStorage' : 'Life Account'} icon={<UserRound size={18} />}>
         {onOpenStorage ? <>

@@ -256,12 +256,12 @@ export default function MainDashboard({ hubOnly = false, initialScreen = 'home',
     </header>
 
     <div className="life-main-stack">
-      {breakCard || <div className="life-main-today-area">
+      {!hubOnly && (breakCard || <div className="life-main-today-area">
         <h2 id="life-main-today">{t('Today')}</h2>
         <section className="life-main-today" aria-labelledby="life-main-today">
           {hubLinks}
         </section>
-      </div>}
+      </div>)}
 
       {!hubOnly && addTaskButton}
 
