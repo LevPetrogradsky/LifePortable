@@ -1186,3 +1186,5 @@
 }
 
 .life-main-guide-preview { grid-template-columns: minmax(0, 1fr); }
+
+.life-main-storage-status { grid-column: 1 / -1; margin: 2px 8px; color: var(--main-muted); font-size: 14px; }

@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
-import { ArrowLeft, ArrowRight, BookOpen, BookText, CalendarDays, Check, ChevronRight, Circle, ClipboardList, Code2, Dumbbell, Flag, Gamepad2, Github, GripHorizontal, HardDrive, Heart, Leaf, ListTodo, Maximize2, Pause, Pencil, Play, Plus, Search, Settings2, ShieldCheck, Sparkles, Trash2, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Circle, ClipboardList, Dumbbell, Flag, Gamepad2, Github, GripHorizontal, Heart, ListTodo, Maximize2, Pause, Pencil, Play, Plus, Search, Settings2, Sparkles, Trash2, X } from 'lucide-react'
 import { taskLists, type LiveOSData, type Task, type TaskList } from './data'
 import { todayTaskLimit } from './task-rules'
 import { translate } from './language'
@@ -285,38 +285,7 @@ export default function MainDashboard({ hubOnly = false, initialScreen = 'home',
           <span className="life-main-shortcut-icon gym"><Dumbbell size={21} aria-hidden="true" /></span>
           <strong>LifeGym</strong>
         </a>
-        <a href="https://livestorage-blue.vercel.app/">
-          <span className="life-main-shortcut-icon storage"><HardDrive size={21} aria-hidden="true" /></span>
-          <strong>LifeStorage</strong>
-        </a>
-        <div className="life-main-service-soon">
-          <span className="life-main-shortcut-icon future"><Sparkles size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LifeAI</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
-        </div>
-        <div className="life-main-service-soon">
-          <span className="life-main-shortcut-icon future"><Settings2 size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LifeManage</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
-        </div>
-        <div className="life-main-service-soon">
-          <span className="life-main-shortcut-icon future"><BookText size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LifeBible</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
-        </div>
-        <div className="life-main-service-soon">
-          <span className="life-main-shortcut-icon future"><Code2 size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LifeCode</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
-        </div>
-        <div className="life-main-service-soon">
-          <span className="life-main-shortcut-icon future"><ShieldCheck size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LifeSecure</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
-        </div>
-        <div className="life-main-service-soon">
-          <span className="life-main-shortcut-icon future"><CalendarDays size={21} aria-hidden="true" /></span>
-          <span className="life-main-service-copy"><strong>LifePlan</strong><small>{language === 'ru' ? 'Скоро' : 'Coming soon'}</small></span>
-        </div>
-        <div className="life-main-service-soon">
-          <span className="life-main-shortcut-icon future"><Leaf size={21} aria-hidden="true" /></span>
-          <strong>Life OS в разработке</strong>
-        </div>
+        <p className="life-main-storage-status">LifeStorage · Coming Soon</p>
       </nav>
       </section>
       <section className="life-main-shortcuts life-main-guide-preview" aria-label="Guide">
