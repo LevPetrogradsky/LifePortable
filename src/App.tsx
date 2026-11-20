@@ -29,7 +29,7 @@ import './mobile-navigation.css'
 import { mobileNavigationLayout } from './mobile-navigation'
 import { repositoryUrl, serviceMode, serviceName } from './service-mode'
 
-type View = Exclude<Shortcut, 'focus'> | 'main' | 'ask' | 'ai' | 'settings' | 'storage' | 'focus-history' | 'presets'
+type View = Exclude<Shortcut, 'focus'> | 'main' | 'settings' | 'storage' | 'focus-history' | 'presets'
 const shortcutIcons = { tasks: ClipboardList, journal: BookOpen, focus: Play, flow: MessageCircle }
 const serviceLabels = { tasks: 'LifeTasks', journal: 'LifeJournal', focus: 'LifeTime', flow: '3 questions' }
 const factors: Factor[] = ['Meaningful Goal', 'Personal Control', 'Fast Feedback', 'Other']
@@ -51,7 +51,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   const accountContent = account?.(language)
   const dataRef = useRef(data)
   const showHome = serviceMode === 'hub'
-  const showAskLiveOS = serviceMode === 'hub'
+  const showAskLiveOS = false
   const onHome = (id: Shortcut) => shortcutVisible(data, id, 'home')
   const inBar = (id: Shortcut) => serviceMode === 'hub' ? false : id === serviceMode || (serviceMode === 'time' && id === 'focus')
   const defaultView: View = serviceMode === 'time' ? 'presets' : serviceMode === 'tasks' || serviceMode === 'journal' ? serviceMode : showHome ? 'main' : (['journal', 'tasks'] as const).find(inBar) ?? 'settings'
@@ -59,7 +59,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
     try {
       if (serviceMode === 'hub') {
         const requested = new URLSearchParams(window.location.search).get('open')
-        if (requested === 'ai' || requested === 'storage') return requested
+        if (requested === 'storage') return requested
       }
       return defaultView
     }
@@ -70,8 +70,8 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   const [reflectionReturnView, setReflectionReturnView] = useState<View>(defaultView)
   const [reflectionNotice, setReflectionNotice] = useState('')
   const [postFocusReflection, setPostFocusReflection] = useState(false)
-  const isHidden = (page: View) => serviceMode === 'hub' && !(['main', 'ask', 'ai', 'settings', 'storage'] as View[]).includes(page) ? true
-    : page === 'ai' ? serviceMode !== 'hub' : page === 'main' ? !showHome
+  const isHidden = (page: View) => serviceMode === 'hub' && !(['main', 'settings', 'storage'] as View[]).includes(page) ? true
+    : page === 'main' ? !showHome
     : page === 'flow' ? !postFocusReflection
       : page === 'storage' ? serviceMode !== 'hub'
       : serviceMode !== 'hub' && page === 'journal' && serviceMode !== 'journal' ? true
@@ -630,7 +630,6 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
   const returnLabel = showHome ? 'Back to Hub' : 'Back to Settings'
   const returnFromSection = () => navigate(showHome ? 'main' : 'settings')
   const reflectionReturnLabel = reflectionReturnView === 'main' ? 'Back to Hub'
-    : reflectionReturnView === 'ask' ? 'Back to Guide'
       : reflectionReturnView === 'journal' ? 'Back to Journal'
         : reflectionReturnView === 'tasks' ? 'Back to Tasks' : 'Back to Settings'
 
@@ -677,7 +676,6 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
         }} />
     })}
     {serviceMode === 'time' && <NavButton icon={<History size={iconSize} />} label={t('Focus history')} selected={view === 'focus-history'} onClick={() => navigate('focus-history')} />}
-    {showAskLiveOS && <NavButton icon={<MessageCircle size={iconSize} />} label={t('Guide')} selected={view === 'ask'} onClick={() => navigate('ask')} />}
     {bottom && <NavButton icon={<Settings2 size={iconSize} />} label={t('Settings')} selected={view === 'settings'} onClick={() => navigate('settings')} />}
   </>
 
@@ -718,7 +716,7 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
     clearOnboardingPreviewUrl()
     setOnboardingMode(null)
     const requested = new URLSearchParams(window.location.search).get('open')
-    navigate(requested === 'ai' || requested === 'storage' ? requested : 'main')
+    navigate(requested === 'storage' ? requested : 'main')
     return true
   }
 
@@ -838,22 +836,6 @@ function App({ storageKey, account, existingAccount = false, journalCloudToken, 
           onSettings={() => navigate('settings')}
           onSearch={() => setSearchOpen(true)}
         />}
-
-        {view === 'ask' && <main className="life-main life-main-guide-page">
-          <h1>{t('Guide')}</h1>
-          <p className="life-main-guide-intro">{language === 'ru'
-            ? 'LifePortable помогает перейти к нужному сервису. На главной странице выберите LifeTasks, LifeJournal или LifeTime; работа с ними происходит в отдельных сервисах.'
-            : 'LifePortable helps you find a service. Choose LifeTasks, LifeJournal, or LifeTime on the home page; each service has its own workspace.'}</p>
-          <p className="life-main-guide-intro">{language === 'ru'
-            ? 'Аккаунт и доступное облачное сохранение находятся в LifeStorage. Настройки Hub меняют только внешний вид и язык этой страницы.'
-            : 'Account access and available cloud saving are in LifeStorage. Hub settings control this page’s appearance and language.'}</p>
-        </main>}
-
-        {view === 'ai' && <main className="life-main life-main-guide-page">
-          <h1>LifeAI</h1>
-          <p className="life-main-guide-intro">{language === 'ru' ? 'Отдельная публичная страница LifeAI открыта. Генерация ответов пока не доступна.' : 'The separate public LifeAI page is open. Answer generation is not available yet.'}</p>
-          <a href="https://liveai-theta.vercel.app/">{language === 'ru' ? 'Открыть LifeAI' : 'Open LifeAI'}</a>
-        </main>}
 
         {view === 'presets' && <FocusPresets
           language={data.language ?? 'en'}

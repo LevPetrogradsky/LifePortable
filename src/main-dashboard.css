@@ -1184,3 +1184,5 @@
   color: var(--focus-muted);
   font-size: 13px;
 }
+
+.life-main-guide-preview { grid-template-columns: minmax(0, 1fr); }
