@@ -98,7 +98,7 @@ export default function SettingsPage({
       {copyStatus && <span role="status" className="settings-page__hub-link-status">{copyStatus}</span>}
     </div>
     <div className="settings-page__groups">
-      <SettingsGroup title={onOpenStorage ? 'LifeStorage' : 'Life Account'} icon={<UserRound size={18} />}>
+      {!hubOnly && <SettingsGroup title={onOpenStorage ? 'LifeStorage' : 'Life Account'} icon={<UserRound size={18} />}>
         {onOpenStorage ? <>
           <p className="settings-page__description">{language === 'ru' ? 'Аккаунт и сохранение данных находятся в LifeStorage.' : 'Your account and saved data are in LifeStorage.'}</p>
           <button type="button" className="settings-page__action" onClick={onOpenStorage}>{language === 'ru' ? 'Открыть LifeStorage' : 'Open LifeStorage'}</button>
@@ -106,7 +106,7 @@ export default function SettingsPage({
           {account}
           <JournalCloudPanel cloud={journalSync} language={language} onSaveCopy={onExport} />
         </>}
-      </SettingsGroup>
+      </SettingsGroup>}
 
       <SettingsGroup title={t('Profile & appearance')} icon={<Palette size={18} />}
         summary={t(themes.find(option => option.value === theme)?.label ?? '')}>
