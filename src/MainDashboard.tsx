@@ -280,8 +280,8 @@ export default function MainDashboard({ hubOnly = false, initialScreen = 'home',
           <span className="life-main-shortcut-icon focus"><Play size={21} aria-hidden="true" /></span>
           <strong>LifeTime</strong>
         </a>}
-        <a href="https://gymos-preview.vercel.app/" target="_blank" rel="noopener noreferrer"
-          aria-label={language === 'ru' ? 'Открыть LifeGym в новой вкладке' : 'Open LifeGym in a new tab'}>
+        <a href="https://gymos-preview.vercel.app/"
+          aria-label={language === 'ru' ? 'Открыть LifeGym' : 'Open LifeGym'}>
           <span className="life-main-shortcut-icon gym"><Dumbbell size={21} aria-hidden="true" /></span>
           <strong>LifeGym</strong>
         </a>
